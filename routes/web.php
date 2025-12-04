@@ -19,7 +19,10 @@ use App\Http\Controllers\PengembalianController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    if (auth()->check()) {
+        return view('home');
+    }
+    return view('welcome');
 })->name('home');
 
 Route::middleware(['auth'])->group(function () {
