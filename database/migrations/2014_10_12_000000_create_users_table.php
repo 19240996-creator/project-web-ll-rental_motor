@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('no_telepon')->nullable();
+            $table->text('alamat')->nullable();
+            $table->string('no_identitas')->nullable();
+            $table->enum('tipe_identitas', ['KTP', 'SIM', 'Paspor'])->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

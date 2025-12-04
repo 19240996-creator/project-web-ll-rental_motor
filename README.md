@@ -1,66 +1,258 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏍️ Aplikasi Rental Motor
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi manajemen rental motor lengkap dengan fitur booking, tracking, dan pengembalian motor. Dibangun menggunakan **Laravel 10**, **Bootstrap 5**, dan **MySQL**.
 
-## About Laravel
+## 🎯 Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- ✅ **Authentication** - Register & Login user
+- ✅ **Dashboard** - Statistik real-time (motor tersedia, disewa, transaksi aktif)
+- ✅ **Manajemen Motor** - CRUD data motor dengan status tracking
+- ✅ **Manajemen Admin** - CRUD data admin rental
+- ✅ **Transaksi Sewa** - Booking motor dengan perhitungan biaya otomatis
+- ✅ **Pengembalian Motor** - Pencatatan pengembalian dengan biaya keterlambatan
+- ✅ **Responsive Design** - UI responsif untuk desktop dan mobile
+- ✅ **Modern UI** - Bootstrap 5 dengan custom CSS styling
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 💻 Teknologi yang Digunakan
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend:** Laravel 10
+- **Frontend:** Bootstrap 5, HTML5, CSS3, JavaScript
+- **Database:** MySQL 8.0+
+- **PHP:** 8.1+
+- **Icons:** Font Awesome 6
 
-## Learning Laravel
+## 📦 Instalasi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Prasyarat
+- PHP >= 8.1
+- Composer
+- MySQL Server
+- Git (opsional)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Langkah-langkah Setup
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone atau download project:**
+   ```bash
+   git clone <repository-url>
+   cd project-web-ll-rental_motor
+   ```
 
-## Laravel Sponsors
+2. **Install dependencies:**
+   ```bash
+   composer install
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+3. **Generate APP_KEY:**
+   ```bash
+   php artisan key:generate
+   ```
 
-### Premium Partners
+4. **Setup Database:**
+   
+   **Opsi A - Menggunakan File SQL (Recommended):**
+   - Buka MySQL command line atau MySQL Workbench
+   - Jalankan: `SOURCE database/db_rental_motor.sql;`
+   
+   **Opsi B - Windows Batch Script:**
+   - Double-click `setup_database.bat`
+   - Ikuti instruksi di layar
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+5. **Configure .env:**
+   ```env
+   APP_NAME="Rental Motor"
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=db_rental_motor
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-## Contributing
+6. **Jalankan aplikasi:**
+   ```bash
+   php artisan serve
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+7. **Akses aplikasi:**
+   - Browser: `http://localhost:8000`
+   - Register: `http://localhost:8000/register`
+   - Login: `http://localhost:8000/login`
 
-## Code of Conduct
+## 📊 Struktur Database
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Database Name: `db_rental_motor`
 
-## Security Vulnerabilities
+**Tabel:**
+1. **users** - Data user/customer
+2. **motor** - Data motor rental
+3. **admin_sewa_motor** - Data admin
+4. **transaksi** - Transaksi sewa motor
+5. **pengembalian** - Data pengembalian motor
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Plus:** password_reset_tokens, failed_jobs, personal_access_tokens
 
-## License
+## 🗂️ Struktur Folder Project
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+project-web-ll-rental_motor/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Auth/                    # Auth Controllers
+│   │   │   ├── MotorController.php      # Motor CRUD
+│   │   │   ├── AdminController.php      # Admin CRUD
+│   │   │   ├── TransaksiController.php  # Transaksi
+│   │   │   └── PengembalianController.php
+│   │   └── Requests/
+│   └── Models/
+│       ├── User.php
+│       ├── Motor.php
+│       ├── Admin.php
+│       ├── Transaksi.php
+│       └── Pengembalian.php
+├── database/
+│   ├── migrations/        # Database migrations
+│   └── db_rental_motor.sql # SQL file untuk setup
+├── resources/
+│   ├── views/
+│   │   ├── auth/         # Auth pages (login, register)
+│   │   ├── layouts/      # Layout template
+│   │   ├── motor/        # Motor views
+│   │   ├── admin/        # Admin views
+│   │   ├── transaksi/    # Transaksi views
+│   │   └── pengembalian/ # Pengembalian views
+│   └── css/
+│       └── custom.css    # Custom styling
+├── routes/
+│   ├── web.php          # Web routes
+│   └── auth.php         # Auth routes
+├── .env                 # Environment configuration
+├── setup_database.bat   # Windows batch setup script
+└── DATABASE_SETUP.md    # Database setup documentation
+```
+
+## 📝 Data Sample
+
+Database sudah dilengkapi dengan data sample:
+
+**Admin:**
+- ADM001 - Budi Santoso (Jakarta)
+- ADM002 - Siti Nurhaliza (Bandung)
+- ADM003 - Eka Wahyu (Surabaya)
+
+**Motor:**
+- MTR001 - Honda CB150R (150rb/hari)
+- MTR002 - Yamaha Vixion (180rb/hari)
+- MTR003 - Suzuki GSX (200rb/hari)
+- MTR004 - Kawasaki Ninja (250rb/hari)
+- MTR005 - Honda PCX (120rb/hari)
+
+## 🚀 Cara Penggunaan
+
+### User/Customer:
+1. Register akun baru
+2. Login dengan email dan password
+3. Lihat motor yang tersedia di dashboard
+4. Buat transaksi/booking motor
+5. Melakukan pengembalian motor
+
+### Admin:
+1. Login ke sistem
+2. Akses menu Master Data untuk kelola motor dan admin
+3. Kelola transaksi sewa dan pengembalian
+4. Lihat statistik di dashboard
+
+## 🎨 Fitur UI/UX
+
+- **Responsive Design** - Support desktop, tablet, mobile
+- **Modern Color Scheme** - Primary: #ff6b35, Secondary: #004e89
+- **Gradient Backgrounds** - Navbar dan footer dengan gradient
+- **Interactive Cards** - Hover effects pada card dan button
+- **Form Validation** - Client & server side validation
+- **Alert Messages** - Success, error, dan warning messages
+
+## 🔐 Security
+
+- Password hashing dengan bcrypt
+- CSRF protection di semua form
+- Input validation dan sanitization
+- SQL injection prevention (Prepared statements)
+
+## 📚 API Endpoints
+
+### Authentication
+- `GET /register` - Halaman register
+- `POST /register` - Proses registrasi
+- `GET /login` - Halaman login
+- `POST /login` - Proses login
+- `POST /logout` - Logout
+
+### Dashboard
+- `GET /dashboard` - Dashboard utama
+
+### Motor (Authenticated)
+- `GET /motor` - Daftar motor
+- `GET /motor/create` - Form tambah motor
+- `POST /motor` - Simpan motor
+- `GET /motor/{id}/edit` - Form edit motor
+- `PUT /motor/{id}` - Update motor
+- `DELETE /motor/{id}` - Hapus motor
+
+### Admin (Authenticated)
+- `GET /admin` - Daftar admin
+- `GET /admin/create` - Form tambah admin
+- `POST /admin` - Simpan admin
+- `GET /admin/{id}/edit` - Form edit admin
+- `PUT /admin/{id}` - Update admin
+- `DELETE /admin/{id}` - Hapus admin
+
+### Transaksi (Authenticated)
+- `GET /transaksi` - Daftar transaksi
+- `GET /transaksi/create` - Form buat transaksi
+- `POST /transaksi` - Simpan transaksi
+- `GET /transaksi/{id}/edit` - Form edit transaksi
+- `PUT /transaksi/{id}` - Update transaksi
+- `DELETE /transaksi/{id}` - Hapus transaksi
+
+### Pengembalian (Authenticated)
+- `GET /pengembalian` - Daftar pengembalian
+- `GET /pengembalian/create` - Form catat pengembalian
+- `POST /pengembalian` - Simpan pengembalian
+- `DELETE /pengembalian/{id}` - Hapus pengembalian
+
+## 🐛 Troubleshooting
+
+### Error: "SQLSTATE[HY000]: General error: 1030"
+- Pastikan MySQL service berjalan
+- Check disk space MySQL
+
+### Error: "Access denied for user 'root'@'localhost'"
+- Update .env dengan username/password yang benar
+- Jalankan: `php artisan config:clear`
+
+### Error saat migration
+- Jalankan: `php artisan migrate:fresh --seed`
+- Atau gunakan file SQL: `SOURCE database/db_rental_motor.sql;`
+
+### CSS/JS tidak loading
+- Jalankan: `php artisan optimize:clear`
+- Clear browser cache
+
+## 📞 Support & Contact
+
+Untuk pertanyaan atau bug report:
+- Email: support@rentalmotor.com
+- Hubungi: +62-812-3456-7890
+
+## 📄 License
+
+MIT License - Bebas untuk digunakan, dimodifikasi, dan didistribusikan.
+
+## 👨‍💻 Developer
+
+Aplikasi ini dibuat untuk project akhir web II dengan teknologi Laravel terkini.
+
+---
+
+**Happy Renting! 🏍️**
+
