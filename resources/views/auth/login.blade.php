@@ -84,6 +84,7 @@
     .form-control {
         border: 2px solid #e9ecef;
         padding: 12px 16px;
+        padding-right: 45px;
         border-radius: 10px;
         font-size: 14px;
         transition: all 0.3s ease;
@@ -113,18 +114,28 @@
 
     .password-toggle {
         position: absolute;
-        right: 15px;
-        top: 42px;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
         cursor: pointer;
         color: #999;
         background: none;
         border: none;
-        font-size: 16px;
+        font-size: 18px;
         transition: all 0.3s ease;
+        padding: 8px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .password-toggle:hover {
         color: #667eea;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .password-toggle:active {
+        transform: translateY(-50%) scale(0.95);
     }
 
     .form-check {
