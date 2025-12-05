@@ -41,9 +41,10 @@
 
     .register-header {
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        padding: 50px 30px;
+        padding: 30px 30px 20px 30px;
         text-align: center;
         color: white;
+        display: none;
     }
 
     .register-header i {

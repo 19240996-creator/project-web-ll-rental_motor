@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CustomerDashboardController;
 use App\Http\Controllers\MotorController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TransaksiController;
@@ -20,13 +21,14 @@ use App\Http\Controllers\PengembalianController;
 
 Route::get('/', function () {
     if (auth()->check()) {
-        return view('home');
+        return redirect()->route('dashboard');
     }
     return view('welcome');
 })->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/customer/dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
     
     Route::resource('motor', MotorController::class);
     Route::resource('admin', AdminController::class);

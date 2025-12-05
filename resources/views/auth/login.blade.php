@@ -41,9 +41,10 @@
 
     .login-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 50px 30px;
+        padding: 30px 30px 20px 30px;
         text-align: center;
         color: white;
+        display: none;
     }
 
     .login-header i {

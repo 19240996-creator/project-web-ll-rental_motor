@@ -457,14 +457,6 @@
             <div class="hero-content">
                 <h1><i class="fas fa-motorcycle"></i> Selamat Datang di Rental Motor</h1>
                 <p>Layanan penyewaan motor terpercaya dengan harga terjangkau dan kualitas terbaik</p>
-                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <a href="{{ route('login') }}" class="btn btn-primary">
-                        <i class="fas fa-sign-in-alt"></i> Masuk
-                    </a>
-                    <a href="{{ route('register') }}" class="btn btn-secondary">
-                        <i class="fas fa-user-plus"></i> Daftar Akun Baru
-                    </a>
-                </div>
             </div>
         </div>
     </section>
@@ -603,21 +595,7 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Siap untuk Memulai Petualangan?</h2>
-            <p>Daftar sekarang dan dapatkan akses ke ribuan motor berkualitas</p>
-            <div class="cta-buttons">
-                <a href="{{ route('login') }}" class="btn cta-btn-primary">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </a>
-                <a href="{{ route('register') }}" class="btn cta-btn-secondary">
-                    <i class="fas fa-user-plus"></i> Daftar Akun
-                </a>
-            </div>
-        </div>
-    </section>
+
 
     <!-- Footer -->
     <footer>
