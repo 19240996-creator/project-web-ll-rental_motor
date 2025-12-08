@@ -29,26 +29,43 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     @auth
+                        {{-- Dashboard accessible to both --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard') }}">
+                            <a class="nav-link" href="{{ Auth::user()->role === 'admin' ? route('dashboard') : route('customer.dashboard') }}">
                                 <i class="fas fa-chart-line"></i> Dashboard
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('motor.index') }}">
-                                <i class="fas fa-list"></i> Motor
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('transaksi.index') }}">
-                                <i class="fas fa-receipt"></i> Transaksi
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('pengembalian.index') }}">
-                                <i class="fas fa-undo"></i> Pengembalian
-                            </a>
-                        </li>
+                        
+                        {{-- Motor list - admin only --}}
+                        @if(Auth::user()->role === 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('motor.index') }}">
+                                    <i class="fas fa-list"></i> Motor
+                                </a>
+                            </li>
+                        @endif
+                        
+                        {{-- Admin only menu --}}
+                        @if(Auth::user()->role === 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('transaksi.index') }}">
+                                    <i class="fas fa-receipt"></i> Transaksi
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('pengembalian.index') }}">
+                                    <i class="fas fa-undo"></i> Pengembalian
+                                </a>
+                            </li>
+                        @else
+                            {{-- Customer only menu --}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('customer.transactions') }}">
+                                    <i class="fas fa-history"></i> Riwayat Sewa
+                                </a>
+                            </li>
+                        @endif
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="fas fa-user"></i> {{ Auth::user()->name }}
@@ -96,21 +113,35 @@
                 <h5><i class="fas fa-bars"></i> Menu</h5>
             </div>
             <nav class="nav flex-column">
-                <a class="nav-link {{ Route::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                {{-- Dashboard for both roles --}}
+                <a class="nav-link {{ Route::is('dashboard', 'customer.dashboard') ? 'active' : '' }}" href="{{ Auth::user()->role === 'admin' ? route('dashboard') : route('customer.dashboard') }}">
                     <i class="fas fa-tachometer-alt"></i> Dashboard
                 </a>
-                <a class="nav-link {{ Route::is('motor.*') ? 'active' : '' }}" href="{{ route('motor.index') }}">
-                    <i class="fas fa-motorcycle"></i> Data Motor
-                </a>
-                <a class="nav-link {{ Route::is('admin.*') ? 'active' : '' }}" href="{{ route('admin.index') }}">
-                    <i class="fas fa-user-tie"></i> Data Admin
-                </a>
-                <a class="nav-link {{ Route::is('transaksi.*') ? 'active' : '' }}" href="{{ route('transaksi.index') }}">
-                    <i class="fas fa-exchange-alt"></i> Transaksi
-                </a>
-                <a class="nav-link {{ Route::is('pengembalian.*') ? 'active' : '' }}" href="{{ route('pengembalian.index') }}">
-                    <i class="fas fa-undo"></i> Pengembalian
-                </a>
+                
+                {{-- Motor untuk admin only --}}
+                @if(Auth::user()->role === 'admin')
+                    <a class="nav-link {{ Route::is('motor.*') ? 'active' : '' }}" href="{{ route('motor.index') }}">
+                        <i class="fas fa-motorcycle"></i> Motor
+                    </a>
+                @endif
+                
+                {{-- Admin only menu --}}
+                @if(Auth::user()->role === 'admin')
+                    <a class="nav-link {{ Route::is('admin.*') ? 'active' : '' }}" href="{{ route('admin.index') }}">
+                        <i class="fas fa-user-tie"></i> Data Admin
+                    </a>
+                    <a class="nav-link {{ Route::is('transaksi.*') ? 'active' : '' }}" href="{{ route('transaksi.index') }}">
+                        <i class="fas fa-exchange-alt"></i> Transaksi
+                    </a>
+                    <a class="nav-link {{ Route::is('pengembalian.*') ? 'active' : '' }}" href="{{ route('pengembalian.index') }}">
+                        <i class="fas fa-undo"></i> Pengembalian
+                    </a>
+                @else
+                    {{-- Customer only menu --}}
+                    <a class="nav-link {{ Route::is('customer.transactions') ? 'active' : '' }}" href="{{ route('customer.transactions') }}">
+                        <i class="fas fa-history"></i> Riwayat Sewa
+                    </a>
+                @endif
             </nav>
         </div>
         @endauth

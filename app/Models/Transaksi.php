@@ -32,7 +32,7 @@ class Transaksi extends Model
 
     public function motor()
     {
-        return $this->belongsTo(Motor::class, 'Id_motor');
+        return $this->belongsTo(Motor::class, 'Id_motor', 'Id_motor');
     }
 
     public function admin()
@@ -42,6 +42,6 @@ class Transaksi extends Model
 
     public function pengembalian()
     {
-        return $this->hasMany(Pengembalian::class, 'id_transaksi');
+        return $this->hasOne(Pengembalian::class, 'Id_transaksi', 'Id_transaksi');
     }
 }

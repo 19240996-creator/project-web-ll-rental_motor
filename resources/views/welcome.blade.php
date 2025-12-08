@@ -132,6 +132,51 @@
             opacity: 0.95;
         }
 
+        .hero-auth-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .hero-auth-btn {
+            padding: 15px 50px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 18px;
+            border: 2px solid white;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: white;
+        }
+
+        .hero-auth-btn-login {
+            background: white;
+            color: #667eea;
+        }
+
+        .hero-auth-btn-login:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-auth-btn-register {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .hero-auth-btn-register:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
         .hero .btn {
             border-radius: 50px;
             padding: 15px 40px;
@@ -437,7 +482,7 @@
                         <a class="nav-link" href="#fleets">Armada</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-auth btn-login" href="{{ route('login') }}">
+                        <a class="btn btn-auth btn-login" href="{{ route('customer.login') }}">
                             <i class="fas fa-sign-in-alt"></i> Login
                         </a>
                     </li>
@@ -457,6 +502,16 @@
             <div class="hero-content">
                 <h1><i class="fas fa-motorcycle"></i> Selamat Datang di Rental Motor</h1>
                 <p>Layanan penyewaan motor terpercaya dengan harga terjangkau dan kualitas terbaik</p>
+                
+                <!-- Main Auth Buttons -->
+                <div class="hero-auth-buttons">
+                    <a href="{{ route('customer.login') }}" class="hero-auth-btn hero-auth-btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Saya Sudah Punya Akun (LOGIN)
+                    </a>
+                    <a href="{{ route('register') }}" class="hero-auth-btn hero-auth-btn-register">
+                        <i class="fas fa-user-plus"></i> Daftar Akun Baru (REGISTER)
+                    </a>
+                </div>
             </div>
         </div>
     </section>

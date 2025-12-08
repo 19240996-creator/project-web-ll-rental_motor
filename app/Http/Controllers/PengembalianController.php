@@ -34,6 +34,10 @@ class PengembalianController extends Controller
         // Update status transaksi menjadi Selesai
         $transaksi = Transaksi::find($request->Id_transaksi);
         $transaksi->update(['Status_sewa' => 'Selesai']);
+        
+        // Update status motor kembali ke Tersedia
+        $motor = $transaksi->motor;
+        $motor->update(['Status_motor' => 'Tersedia']);
 
         return redirect()->route('pengembalian.index')->with('success', 'Pengembalian berhasil dicatat');
     }

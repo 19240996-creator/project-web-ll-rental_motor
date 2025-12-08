@@ -21,19 +21,36 @@ use App\Http\Controllers\PengembalianController;
 
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('dashboard');
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('customer.dashboard');
+        }
     }
     return view('welcome');
 })->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/customer/dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
+    // Admin Dashboard - admin only
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('admin')->name('dashboard');
     
-    Route::resource('motor', MotorController::class);
-    Route::resource('admin', AdminController::class);
+    // Customer Dashboard - customer only
+    Route::get('/customer/dashboard', [CustomerDashboardController::class, 'index'])->middleware('customer')->name('customer.dashboard');
+    
+    // Transaksi - both admin and customer can access (but with different views)
     Route::resource('transaksi', TransaksiController::class);
-    Route::resource('pengembalian', PengembalianController::class);
+    
+    // Admin only resources
+    Route::middleware('admin')->group(function () {
+        Route::resource('motor', MotorController::class);
+        Route::resource('admin', AdminController::class);
+        Route::resource('pengembalian', PengembalianController::class);
+    });
+    
+    // Customer only routes
+    Route::middleware('customer')->group(function () {
+        Route::get('/customer/transactions', [CustomerDashboardController::class, 'transactions'])->name('customer.transactions');
+    });
 });
 
 require __DIR__.'/auth.php';

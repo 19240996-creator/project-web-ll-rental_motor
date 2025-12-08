@@ -17,10 +17,19 @@ Route::middleware('guest')->group(function () {
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
+    // Admin Login
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    // Customer Login
+    Route::get('login/customer', function() {
+        return view('auth.customer-login');
+    })->name('customer.login');
+
+    Route::post('login/customer', [AuthenticatedSessionController::class, 'store'])
+                ->name('customer.login.post');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');

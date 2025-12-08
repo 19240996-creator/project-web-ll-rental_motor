@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login - Rental Motor')
+@section('title', 'Login Customer - Rental Motor')
 
 @section('content')
 <style>
@@ -148,53 +148,48 @@
         height: 18px;
         margin-top: 3px;
         border: 2px solid #e9ecef;
+        border-radius: 4px;
+        cursor: pointer;
         transition: all 0.3s ease;
     }
 
     .form-check-input:checked {
-        background-color: #667eea;
+        background: #667eea;
         border-color: #667eea;
     }
 
     .form-check-label {
-        margin-left: 8px;
         color: #666;
         font-size: 14px;
+        cursor: pointer;
+        margin-left: 8px;
     }
 
     .btn-login {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 12px 20px;
         border: none;
-        padding: 14px 20px;
-        font-weight: 600;
         border-radius: 10px;
-        font-size: 15px;
+        font-weight: 600;
         transition: all 0.3s ease;
-        color: white;
-        position: relative;
-        overflow: hidden;
         cursor: pointer;
+        width: 100%;
+        font-size: 16px;
     }
 
-    .btn-login:hover {
+    .btn-login:hover:not(.loading) {
         transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        color: white;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
     }
 
-    .btn-login:active {
+    .btn-login:active:not(.loading) {
         transform: translateY(0);
     }
 
     .btn-login:disabled {
         opacity: 0.7;
         cursor: not-allowed;
-        transform: none;
-    }
-
-    .btn-login .spinner-border {
-        display: none;
-        margin-right: 8px;
     }
 
     .btn-login.loading .spinner-border {
@@ -205,6 +200,7 @@
         border-top-color: white;
         border-radius: 50%;
         animation: spin 0.8s linear infinite;
+        margin-right: 8px;
     }
 
     @keyframes spin {
@@ -298,7 +294,7 @@
 
         <div class="login-body">
             <h3 style="text-align: center; margin-bottom: 30px; color: #333;">
-                <i class="fas fa-user-tie"></i> Login Admin
+                <i class="fas fa-user"></i> Login Customer
             </h3>
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -314,7 +310,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('login') }}" method="POST" novalidate id="loginForm">
+            <form action="{{ route('customer.login.post') }}" method="POST" novalidate id="loginForm">
                 @csrf
 
                 <div class="form-group">
@@ -372,7 +368,7 @@
                 <a href="{{ route('register') }}">Daftar di sini</a>
             </p>
             <p style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px;">
-                <a href="{{ route('customer.login') }}">Login sebagai Customer?</a>
+                <a href="{{ route('login') }}">Login sebagai Admin?</a>
             </p>
         </div>
     </div>

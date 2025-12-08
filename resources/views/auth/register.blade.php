@@ -384,6 +384,9 @@
         </div>
 
         <div class="register-body">
+            <h3 style="text-align: center; margin-bottom: 30px; color: #333;">
+                <i class="fas fa-user"></i> Daftar Sebagai Customer
+            </h3>
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <div style="margin-bottom: 10px;">
