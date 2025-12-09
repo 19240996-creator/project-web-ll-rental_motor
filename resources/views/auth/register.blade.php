@@ -498,7 +498,7 @@
 
         <div class="register-footer">
             <p>Sudah punya akun? 
-                <a href="{{ route('login') }}">Login di sini</a>
+                <a href="{{ route('customer.login') }}">Login di sini</a>
             </p>
         </div>
     </div>
