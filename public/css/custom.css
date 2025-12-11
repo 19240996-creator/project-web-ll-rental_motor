@@ -124,6 +124,14 @@ html, body {
     font-size: 1.2rem;
 }
 
+.sidebar .nav {
+    padding-bottom: 2rem;
+}
+
+.sidebar .nav-link {
+    margin-bottom: 0.5rem;
+}
+
 /* ========================================
    DASHBOARD CARDS
    ======================================== */
@@ -290,11 +298,14 @@ html, body {
     background: white;
     border-radius: 12px;
     box-shadow: var(--shadow);
-    overflow: hidden;
+    overflow-x: auto;
+    padding: 0;
 }
 
 .table {
     margin-bottom: 0;
+    width: 100%;
+    table-layout: auto;
 }
 
 .table thead {
