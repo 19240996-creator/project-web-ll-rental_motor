@@ -60,25 +60,26 @@
         }
 
         .btn-login {
-            background: white;
-            color: #667eea;
-            border: 2px solid white;
-        }
-
-        .btn-login:hover {
-            background: transparent;
-            color: white;
-        }
-
-        .btn-register {
             background: #667eea;
             color: white;
             border: 2px solid #667eea;
         }
 
-        .btn-register:hover {
+        .btn-login:hover {
             background: white;
             color: #667eea;
+        }
+
+        .btn-register {
+            background: #667eea !important;
+            color: white !important;
+            border: 2px solid #667eea !important;
+        }
+
+        .btn-register:hover {
+            background: transparent !important;
+            color: white !important;
+            border-color: white !important;
         }
 
         /* Hero Section */
@@ -482,13 +483,13 @@
                         <a class="nav-link" href="#fleets">Armada</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-auth btn-login" href="{{ route('customer.login') }}">
-                            <i class="fas fa-sign-in-alt"></i> Login
+                        <a class="btn btn-auth btn-login" href="{{ route('login') }}">
+                            <i class="fas fa-sign-in-alt"></i> Login Admin
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-auth btn-register" href="{{ route('register') }}">
-                            <i class="fas fa-user-plus"></i> Daftar
+                            <i class="fas fa-user-plus"></i> Daftar Customer
                         </a>
                     </li>
                 </ul>
@@ -617,7 +618,7 @@
                         <h5>Honda CB150R</h5>
                         <p>Motor sporty dengan performa tinggi</p>
                         <div class="fleet-price">Rp 150.000/hari</div>
-                        <a href="{{ route('login') }}" class="btn btn-light btn-sm">
+                        <a href="{{ route('customer.login') }}" class="btn btn-light btn-sm">
                             <i class="fas fa-plus"></i> Pesan Sekarang
                         </a>
                     </div>
@@ -629,7 +630,7 @@
                         <h5>Yamaha Vixion</h5>
                         <p>Motor modern dengan teknologi terkini</p>
                         <div class="fleet-price">Rp 180.000/hari</div>
-                        <a href="{{ route('login') }}" class="btn btn-light btn-sm">
+                        <a href="{{ route('customer.login') }}" class="btn btn-light btn-sm">
                             <i class="fas fa-plus"></i> Pesan Sekarang
                         </a>
                     </div>
@@ -641,7 +642,7 @@
                         <h5>Suzuki GSX</h5>
                         <p>Motor premium dengan desain elegan</p>
                         <div class="fleet-price">Rp 200.000/hari</div>
-                        <a href="{{ route('login') }}" class="btn btn-light btn-sm">
+                        <a href="{{ route('customer.login') }}" class="btn btn-light btn-sm">
                             <i class="fas fa-plus"></i> Pesan Sekarang
                         </a>
                     </div>
@@ -655,7 +656,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 Aplikasi Rental Motor. All rights reserved. | Dibuat dengan <i class="fas fa-heart text-danger"></i> oleh Tim Developer</p>
+            <p>&copy; 2024 Aplikasi Rental Motor. All rights reserved. | Dibuat dengan <i class="fas fa-heart text-danger"></i> oleh Tim GO-JAG</p>
         </div>
     </footer>
 

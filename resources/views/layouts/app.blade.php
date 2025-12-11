@@ -184,7 +184,7 @@
     <!-- Footer -->
     <footer>
         <div class="container-fluid">
-            <p>&copy; 2024 Aplikasi Rental Motor. All rights reserved. | Dibuat dengan <i class="fas fa-heart text-danger"></i> oleh Tim Developer</p>
+            <p>&copy; 2024 Aplikasi Rental Motor. All rights reserved. | Dibuat dengan <i class="fas fa-heart text-danger"></i> oleh Tim GO-JAG</p>
         </div>
     </footer>
 

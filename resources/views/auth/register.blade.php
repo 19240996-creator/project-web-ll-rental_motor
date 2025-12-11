@@ -5,7 +5,7 @@
 @section('content')
 <style>
     body {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         min-height: 100vh !important;
     }
 
@@ -15,7 +15,7 @@
         align-items: center;
         justify-content: center;
         padding: 40px 20px;
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
     .register-card {
@@ -40,7 +40,7 @@
     }
 
     .register-header {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         padding: 30px 30px 20px 30px;
         text-align: center;
         color: white;
@@ -97,9 +97,9 @@
     }
 
     .form-control:focus {
-        border-color: #059669;
+        border-color: #667eea;
         background: white;
-        box-shadow: 0 0 0 4px rgba(245, 87, 108, 0.1);
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         outline: none;
     }
 
@@ -117,12 +117,12 @@
     }
 
     .form-control.is-valid {
-        border-color: #198754;
-        background: #f5fff7;
+        border-color: #667eea;
+        background: #f0f4ff;
     }
 
     .form-control.is-valid:focus {
-        box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.1);
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
     }
 
     .password-toggle {
@@ -143,7 +143,7 @@
     }
 
     .password-toggle:hover {
-        color: #10b981;
+        color: #667eea;
         transform: translateY(-50%) scale(1.1);
     }
 
@@ -228,7 +228,7 @@
 
     .password-info {
         background: #f8f9fa;
-        border-left: 4px solid #059669;
+        border-left: 4px solid #667eea;
         padding: 15px;
         border-radius: 8px;
         margin-bottom: 25px;
@@ -236,7 +236,7 @@
     }
 
     .password-info strong {
-        color: #059669;
+        color: #667eea;
     }
 
     .password-info ul {
@@ -250,7 +250,7 @@
     }
 
     .btn-register {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
         padding: 14px 20px;
         font-weight: 600;
@@ -312,7 +312,7 @@
     }
 
     .register-footer a {
-        color: #059669;
+        color: #764ba2;
         text-decoration: none;
         font-weight: 600;
         transition: all 0.3s ease;
@@ -406,7 +406,7 @@
 
                 <div class="form-group">
                     <label for="name" class="form-label">
-                        <span><i class="fas fa-user" style="color: #059669; margin-right: 8px;"></i>Nama Lengkap</span>
+                        <span><i class="fas fa-user" style="color: #667eea; margin-right: 8px;"></i>Nama Lengkap</span>
                     </label>
                     <input type="text" 
                            class="form-control @error('name') is-invalid @enderror" 
@@ -423,7 +423,7 @@
 
                 <div class="form-group">
                     <label for="email" class="form-label">
-                        <span><i class="fas fa-envelope" style="color: #059669; margin-right: 8px;"></i>Email Address</span>
+                        <span><i class="fas fa-envelope" style="color: #667eea; margin-right: 8px;"></i>Email Address</span>
                     </label>
                     <input type="email" 
                            class="form-control @error('email') is-invalid @enderror" 
@@ -440,7 +440,7 @@
                 <div class="form-row-2">
                     <div class="form-group">
                         <label for="password" class="form-label">
-                            <span><i class="fas fa-lock" style="color: #059669; margin-right: 8px;"></i>Password</span>
+                            <span><i class="fas fa-lock" style="color: #667eea; margin-right: 8px;"></i>Password</span>
                         </label>
                         <div style="position: relative;">
                             <input type="password" 
@@ -464,7 +464,7 @@
 
                     <div class="form-group">
                         <label for="password_confirmation" class="form-label">
-                            <span><i class="fas fa-lock" style="color: #059669; margin-right: 8px;"></i>Konfirmasi</span>
+                            <span><i class="fas fa-lock" style="color: #667eea; margin-right: 8px;"></i>Konfirmasi</span>
                         </label>
                         <div style="position: relative;">
                             <input type="password" 
@@ -498,7 +498,7 @@
 
         <div class="register-footer">
             <p>Sudah punya akun? 
-                <a href="{{ route('customer.login') }}">Login di sini</a>
+                <a href="{{ route('customer.login') }}" style="color: #667eea; text-decoration: none; font-weight: 600;">Login di sini</a>
             </p>
         </div>
     </div>
