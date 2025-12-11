@@ -387,10 +387,7 @@
         </div>
 
         <div class="login-footer">
-            <p>Belum punya akun? 
-                <a href="{{ route('register') }}">Daftar di sini</a>
-            </p>
-            <p style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px;">
+            <p>
                 <a href="{{ route('customer.login') }}">Login sebagai Customer?</a>
             </p>
         </div>
