@@ -136,9 +136,8 @@ project-web-ll-rental_motor/
 Database sudah dilengkapi dengan data sample:
 
 **Admin:**
-- ADM001 - Budi Santoso (Jakarta)
-- ADM002 - Siti Nurhaliza (Bandung)
-- ADM003 - Eka Wahyu (Surabaya)
+- ADM001 - Ahmad Nur Harry (kp.telar)
+- ADM002 - Ajril Al Baihaqi (kp.munjul)
 
 **Motor:**
 - MTR001 - Honda CB150R (150rb/hari)
