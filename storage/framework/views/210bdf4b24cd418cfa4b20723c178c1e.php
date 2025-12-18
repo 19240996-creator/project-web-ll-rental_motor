@@ -1,8 +1,6 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Dashboard'); ?>
 
-@section('title', 'Dashboard')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
     :root{
         --brand-1: #667eea;
@@ -76,10 +74,10 @@
     <div class="container">
         <div class="welcome-section">
             <div>
-                <h2><i class="fas fa-hand-wave" style="color:var(--brand-1);margin-right:8px"></i>Selamat Datang, {{ Auth::user()->name }}!</h2>
+                <h2><i class="fas fa-hand-wave" style="color:var(--brand-1);margin-right:8px"></i>Selamat Datang, <?php echo e(Auth::user()->name); ?>!</h2>
                 <p class="small-note">Kelola rental motor Anda dengan mudah dan efisien</p>
             </div>
-            <div class="small-note">Terakhir login: <strong>{{ Auth::user()->last_login_at ?? '—' }}</strong></div>
+            <div class="small-note">Terakhir login: <strong><?php echo e(Auth::user()->last_login_at ?? '—'); ?></strong></div>
         </div>
 
         <div class="dashboard-header">
@@ -88,8 +86,8 @@
                 <p>Ringkasan aktivitas dan statistik</p>
             </div>
             <div class="chart-actions">
-                <a href="{{ route('motor.index') }}" class="action-btn action-primary"><i class="fas fa-list"></i> Data Motor</a>
-                <a href="{{ route('transaksi.index') }}" class="action-btn action-success"><i class="fas fa-receipt"></i> Transaksi</a>
+                <a href="<?php echo e(route('motor.index')); ?>" class="action-btn action-primary"><i class="fas fa-list"></i> Data Motor</a>
+                <a href="<?php echo e(route('transaksi.index')); ?>" class="action-btn action-success"><i class="fas fa-receipt"></i> Transaksi</a>
             </div>
         </div>
 
@@ -100,7 +98,7 @@
                         <i class="fas fa-motorcycle"></i>
                     </div>
                     <div class="stat-body">
-                        <p class="stat-value">{{ $total_motors }}</p>
+                        <p class="stat-value"><?php echo e($total_motors); ?></p>
                         <p class="stat-label">Total Motor</p>
                     </div>
                 </div>
@@ -112,7 +110,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stat-body">
-                        <p class="stat-value">{{ $motors_available }}</p>
+                        <p class="stat-value"><?php echo e($motors_available); ?></p>
                         <p class="stat-label">Motor Tersedia</p>
                     </div>
                 </div>
@@ -124,7 +122,7 @@
                         <i class="fas fa-lock"></i>
                     </div>
                     <div class="stat-body">
-                        <p class="stat-value">{{ $motors_rented }}</p>
+                        <p class="stat-value"><?php echo e($motors_rented); ?></p>
                         <p class="stat-label">Motor Disewa</p>
                     </div>
                 </div>
@@ -136,7 +134,7 @@
                         <i class="fas fa-exchange-alt"></i>
                     </div>
                     <div class="stat-body">
-                        <p class="stat-value">{{ $total_transaksi }}</p>
+                        <p class="stat-value"><?php echo e($total_transaksi); ?></p>
                         <p class="stat-label">Total Transaksi</p>
                     </div>
                 </div>
@@ -148,7 +146,7 @@
                         <i class="fas fa-undo"></i>
                     </div>
                     <div class="stat-body">
-                        <p class="stat-value">{{ $total_pengembalian }}</p>
+                        <p class="stat-value"><?php echo e($total_pengembalian); ?></p>
                         <p class="stat-label">Pengembalian</p>
                     </div>
                 </div>
@@ -160,7 +158,7 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="stat-body">
-                        <p class="stat-value">{{ $total_admin ?? 0 }}</p>
+                        <p class="stat-value"><?php echo e($total_admin ?? 0); ?></p>
                         <p class="stat-label">Total Admin</p>
                     </div>
                 </div>
@@ -168,10 +166,10 @@
         </div>
 
         <div class="quick-actions">
-            <a href="{{ route('motor.create') }}" class="action-btn action-primary"><i class="fas fa-plus"></i> Tambah Motor</a>
-            <a href="{{ route('transaksi.create') }}" class="action-btn action-success"><i class="fas fa-file-invoice"></i> Buat Transaksi</a>
-            <a href="{{ route('motor.index') }}" class="action-btn action-info"><i class="fas fa-list"></i> Lihat Motor</a>
-            <a href="{{ route('transaksi.index') }}" class="action-btn action-primary"><i class="fas fa-receipt"></i> Lihat Transaksi</a>
+            <a href="<?php echo e(route('motor.create')); ?>" class="action-btn action-primary"><i class="fas fa-plus"></i> Tambah Motor</a>
+            <a href="<?php echo e(route('transaksi.create')); ?>" class="action-btn action-success"><i class="fas fa-file-invoice"></i> Buat Transaksi</a>
+            <a href="<?php echo e(route('motor.index')); ?>" class="action-btn action-info"><i class="fas fa-list"></i> Lihat Motor</a>
+            <a href="<?php echo e(route('transaksi.index')); ?>" class="action-btn action-primary"><i class="fas fa-receipt"></i> Lihat Transaksi</a>
         </div>
 
         <div class="row">
@@ -179,7 +177,7 @@
                 <div class="chart-section">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
                         <h5 style="margin:0"><i class="fas fa-chart-bar" style="color:var(--brand-1);margin-right:8px"></i> Statistik Aktivitas</h5>
-                        <div class="small-note">Periode: <strong>{{ $chartPeriod ?? 'Bulan ini' }}</strong></div>
+                        <div class="small-note">Periode: <strong><?php echo e($chartPeriod ?? 'Bulan ini'); ?></strong></div>
                     </div>
                     <p class="small-note">Data statistik mengenai transaksi dan pengembalian motor</p>
                     <canvas id="activityChart" height="120"></canvas>
@@ -196,7 +194,7 @@
                         </div>
                         <div>
                             <p style="margin:0;font-weight:600">Anda login ke sistem</p>
-                            <div class="small-note">{{ now()->diffForHumans() }}</div>
+                            <div class="small-note"><?php echo e(now()->diffForHumans()); ?></div>
                         </div>
                     </div>
 
@@ -232,8 +230,8 @@
         const ctx = document.getElementById('activityChart');
         if(!ctx) return;
 
-        const labels = {!! json_encode($chartLabels) !!};
-        const data = [{{ $total_transaksi ?? 0 }}, 12, 18, 6];
+        const labels = <?php echo json_encode($chartLabels); ?>;
+        const data = [<?php echo e($total_transaksi ?? 0); ?>, 12, 18, 6];
 
         new Chart(ctx, {
             type: 'bar',
@@ -259,4 +257,6 @@
     });
 </script>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\PROJECT AKHIR WEB II\project-web-ll-rental_motor\resources\views/dashboard.blade.php ENDPATH**/ ?>

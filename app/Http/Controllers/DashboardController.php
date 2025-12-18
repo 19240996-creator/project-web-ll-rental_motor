@@ -19,6 +19,7 @@ class DashboardController extends Controller
         $transaksi_aktif = Transaksi::where('Status_sewa', 'Aktif')->count();
         $total_pengembalian = 0;
         $total_admin = 0;
+        $chartLabels = ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'];
         
         try {
             $total_pengembalian = Pengembalian::count();
@@ -39,7 +40,8 @@ class DashboardController extends Controller
             'total_transaksi',
             'transaksi_aktif',
             'total_pengembalian',
-            'total_admin'
+            'total_admin',
+            'chartLabels'
         ));
     }
 }
