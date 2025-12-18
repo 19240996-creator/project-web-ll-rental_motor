@@ -4,400 +4,259 @@
 
 @section('content')
 <style>
+    :root{
+        --brand-1: #667eea;
+        --brand-2: #764ba2;
+        --muted: #6c757d;
+        --glass: rgba(255,255,255,0.8);
+    }
+
+    .page-bg{
+        background: linear-gradient(180deg, #f7f9fc 0%, #eef2fb 100%);
+        padding: 30px 0;
+    }
+
     .dashboard-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%);
         color: white;
-        padding: 40px 30px;
-        border-radius: 15px;
-        margin-bottom: 40px;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-    }
-
-    .dashboard-header h1 {
-        font-size: 32px;
-        font-weight: bold;
-        margin: 0;
-        margin-bottom: 10px;
-    }
-
-    .dashboard-header p {
-        opacity: 0.9;
-        margin: 0;
-        font-size: 16px;
-    }
-
-    .stat-card {
-        border: none;
-        border-radius: 15px;
-        padding: 25px;
+        padding: 28px 24px;
+        border-radius: 12px;
         margin-bottom: 20px;
-        background: white;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:20px;
     }
 
-    .stat-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    .dashboard-header .title {
+        display:flex;align-items:center;gap:12px
     }
 
-    .stat-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    }
+    .dashboard-header h1{font-size:20px;margin:0;font-weight:700}
+    .dashboard-header p{margin:0;opacity:.9}
 
-    .stat-card.primary::before {
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-    }
+    .welcome-section{background:var(--glass);backdrop-filter: blur(6px);border-radius:12px;padding:18px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .welcome-section h2{font-size:18px;margin:0}
+    .welcome-section p{margin:0;color:var(--muted)}
 
-    .stat-card.success::before {
-        background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
-    }
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-bottom:18px}
+    .stat-card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(19,24,31,0.05);position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+    .stat-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(19,24,31,0.08)}
+    .stat-top{display:flex;align-items:center;gap:12px}
+    .stat-bubble{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-size:20px}
+    .stat-body{flex:1}
+    .stat-value{font-size:26px;font-weight:700;margin:0}
+    .stat-label{color:var(--muted);font-size:13px;margin-top:6px}
 
-    .stat-card.danger::before {
-        background: linear-gradient(90deg, #dc3545 0%, #ff6b6b 100%);
-    }
+    .quick-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+    .action-btn{padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:600;color:white;display:inline-flex;align-items:center;gap:8px}
 
-    .stat-card.warning::before {
-        background: linear-gradient(90deg, #ffc107 0%, #ff9800 100%);
-    }
+    .action-primary{background:linear-gradient(90deg,var(--brand-1),var(--brand-2))}
+    .action-success{background:linear-gradient(90deg,#28a745,#20c997)}
+    .action-info{background:linear-gradient(90deg,#17a2b8,#00bcd4)}
 
-    .stat-card.secondary::before {
-        background: linear-gradient(90deg, #6c757d 0%, #495057 100%);
-    }
+    .row {display:flex;flex-wrap:wrap;gap:18px}
+    .col-lg-8{flex:0 0 66.6666%;max-width:66.6666%}
+    .col-lg-4{flex:0 0 33.3333%;max-width:33.3333%}
+    @media (max-width: 992px){.col-lg-8,.col-lg-4{flex:0 0 100%;max-width:100%}}
 
-    .stat-icon {
-        font-size: 32px;
-        margin-bottom: 15px;
-    }
+    .chart-section,.recent-activity{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(19,24,31,0.04)}
+    .chart-actions{display:flex;gap:8px;align-items:center}
 
-    .stat-value {
-        font-size: 36px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 8px;
-    }
+    .activity-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #f1f3f5}
+    .activity-item:last-child{border-bottom:none}
+    .activity-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:white}
 
-    .stat-label {
-        font-size: 14px;
-        color: #999;
-        font-weight: 500;
-    }
-
-    .quick-actions {
-        background: white;
-        border-radius: 15px;
-        padding: 30px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        margin-bottom: 30px;
-    }
-
-    .quick-actions h5 {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    .action-btn {
-        display: inline-block;
-        padding: 12px 24px;
-        margin-right: 12px;
-        margin-bottom: 12px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        font-size: 14px;
-    }
-
-    .action-btn i {
-        margin-right: 8px;
-    }
-
-    .action-btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-    }
-
-    .action-btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        color: white;
-    }
-
-    .action-btn-success {
-        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        color: white;
-        border: none;
-    }
-
-    .action-btn-success:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
-        color: white;
-    }
-
-    .action-btn-info {
-        background: linear-gradient(135deg, #17a2b8 0%, #00bcd4 100%);
-        color: white;
-        border: none;
-    }
-
-    .action-btn-info:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(23, 162, 184, 0.3);
-        color: white;
-    }
-
-    .welcome-section {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-radius: 15px;
-        padding: 30px;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-
-    .welcome-section h2 {
-        color: #333;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-
-    .welcome-section p {
-        color: #666;
-        font-size: 16px;
-    }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-        margin-bottom: 40px;
-    }
-
-    @media (max-width: 768px) {
-        .dashboard-header h1 {
-            font-size: 24px;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .action-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin-right: 0;
-            margin-bottom: 10px;
-        }
-    }
-
-    .chart-section {
-        background: white;
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        margin-bottom: 30px;
-    }
-
-    .chart-section h5 {
-        font-weight: bold;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    .recent-activity {
-        background: white;
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    .recent-activity h5 {
-        font-weight: bold;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    .activity-item {
-        padding: 15px 0;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        align-items: center;
-    }
-
-    .activity-item:last-child {
-        border-bottom: none;
-    }
-
-    .activity-icon {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        margin-right: 15px;
-        font-size: 18px;
-    }
-
-    .activity-text {
-        flex: 1;
-    }
-
-    .activity-text p {
-        margin: 0;
-        color: #333;
-        font-weight: 500;
-    }
-
-    .activity-time {
-        color: #999;
-        font-size: 12px;
-    }
+    .small-note{color:var(--muted);font-size:13px}
 </style>
 
-<div class="container-fluid">
-    <!-- Welcome Section -->
-    <div class="welcome-section">
-        <h2><i class="fas fa-hand-wave" style="margin-right: 10px; color: #667eea;"></i>Selamat Datang, {{ Auth::user()->name }}!</h2>
-        <p>Kelola rental motor Anda dengan mudah dan efisien</p>
-    </div>
+<div class="container-fluid page-bg">
 
-    <!-- Dashboard Header -->
-    <div class="dashboard-header">
-        <h1><i class="fas fa-chart-line"></i> Dashboard</h1>
-        <p>Ringkasan aktivitas dan statistik rental motor Anda</p>
-    </div>
-
-    <!-- Statistics Cards -->
-    <div class="stats-grid">
-        <div class="stat-card primary">
-            <div class="stat-icon">
-                <i class="fas fa-motorcycle"></i>
+    <div class="container">
+        <div class="welcome-section">
+            <div>
+                <h2><i class="fas fa-hand-wave" style="color:var(--brand-1);margin-right:8px"></i>Selamat Datang, {{ Auth::user()->name }}!</h2>
+                <p class="small-note">Kelola rental motor Anda dengan mudah dan efisien</p>
             </div>
-            <div class="stat-value">{{ $total_motors }}</div>
-            <div class="stat-label">Total Motor</div>
+            <div class="small-note">Terakhir login: <strong>{{ Auth::user()->last_login_at ?? '—' }}</strong></div>
         </div>
 
-        <div class="stat-card success">
-            <div class="stat-icon">
-                <i class="fas fa-check-circle"></i>
+        <div class="dashboard-header">
+            <div class="title">
+                <h1><i class="fas fa-tachometer-alt" style="color:rgba(255,255,255,0.95)"></i> Dashboard</h1>
+                <p>Ringkasan aktivitas dan statistik</p>
             </div>
-            <div class="stat-value">{{ $motors_available }}</div>
-            <div class="stat-label">Motor Tersedia</div>
+            <div class="chart-actions">
+                <a href="{{ route('motor.index') }}" class="action-btn action-primary"><i class="fas fa-list"></i> Data Motor</a>
+                <a href="{{ route('transaksi.index') }}" class="action-btn action-success"><i class="fas fa-receipt"></i> Transaksi</a>
+            </div>
         </div>
 
-        <div class="stat-card danger">
-            <div class="stat-icon">
-                <i class="fas fa-lock"></i>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div class="stat-bubble" style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2))">
+                        <i class="fas fa-motorcycle"></i>
+                    </div>
+                    <div class="stat-body">
+                        <p class="stat-value">{{ $total_motors }}</p>
+                        <p class="stat-label">Total Motor</p>
+                    </div>
+                </div>
             </div>
-            <div class="stat-value">{{ $motors_rented }}</div>
-            <div class="stat-label">Motor Disewa</div>
-        </div>
 
-        <div class="stat-card warning">
-            <div class="stat-icon">
-                <i class="fas fa-exchange-alt"></i>
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div class="stat-bubble" style="background:linear-gradient(90deg,#28a745,#20c997)">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-body">
+                        <p class="stat-value">{{ $motors_available }}</p>
+                        <p class="stat-label">Motor Tersedia</p>
+                    </div>
+                </div>
             </div>
-            <div class="stat-value">{{ $total_transaksi }}</div>
-            <div class="stat-label">Total Transaksi</div>
-        </div>
 
-        <div class="stat-card secondary">
-            <div class="stat-icon">
-                <i class="fas fa-undo"></i>
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div class="stat-bubble" style="background:linear-gradient(90deg,#dc3545,#ff6b6b)">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="stat-body">
+                        <p class="stat-value">{{ $motors_rented }}</p>
+                        <p class="stat-label">Motor Disewa</p>
+                    </div>
+                </div>
             </div>
-            <div class="stat-value">{{ $total_pengembalian }}</div>
-            <div class="stat-label">Pengembalian</div>
-        </div>
 
-        <div class="stat-card info">
-            <div class="stat-icon">
-                <i class="fas fa-users"></i>
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div class="stat-bubble" style="background:linear-gradient(90deg,#ffc107,#ff9800);color:#2b2b2b">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="stat-body">
+                        <p class="stat-value">{{ $total_transaksi }}</p>
+                        <p class="stat-label">Total Transaksi</p>
+                    </div>
+                </div>
             </div>
-            <div class="stat-value">{{ $total_admin ?? 0 }}</div>
-            <div class="stat-label">Total Admin</div>
-        </div>
-    </div>
 
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-        <h5><i class="fas fa-bolt" style="margin-right: 10px; color: #667eea;"></i>Aksi Cepat</h5>
-        <a href="{{ route('motor.create') }}" class="action-btn action-btn-primary">
-            <i class="fas fa-plus"></i> Tambah Motor
-        </a>
-        <a href="{{ route('transaksi.create') }}" class="action-btn action-btn-success">
-            <i class="fas fa-file-invoice"></i> Buat Transaksi
-        </a>
-        <a href="{{ route('motor.index') }}" class="action-btn action-btn-info">
-            <i class="fas fa-list"></i> Lihat Motor
-        </a>
-        <a href="{{ route('transaksi.index') }}" class="action-btn action-btn-primary">
-            <i class="fas fa-receipt"></i> Lihat Transaksi
-        </a>
-    </div>
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div class="stat-bubble" style="background:linear-gradient(90deg,#6c757d,#495057)">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <div class="stat-body">
+                        <p class="stat-value">{{ $total_pengembalian }}</p>
+                        <p class="stat-label">Pengembalian</p>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Chart Section (Optional) -->
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="chart-section">
-                <h5><i class="fas fa-chart-bar" style="margin-right: 10px; color: #667eea;"></i>Statistik Aktivitas</h5>
-                <p style="color: #999;">Data statistik mengenai transaksi dan pengembalian motor</p>
-                <div style="padding: 40px 0; text-align: center;">
-                    <i class="fas fa-chart-pie" style="font-size: 48px; color: #ddd;"></i>
-                    <p style="color: #999; margin-top: 15px;">Grafik akan ditampilkan setelah ada data transaksi</p>
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div class="stat-bubble" style="background:linear-gradient(90deg,#00bcd4,#17a2b8)">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-body">
+                        <p class="stat-value">{{ $total_admin ?? 0 }}</p>
+                        <p class="stat-label">Total Admin</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-4">
-            <div class="recent-activity">
-                <h5><i class="fas fa-history" style="margin-right: 10px; color: #667eea;"></i>Aktivitas Terbaru</h5>
-                
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-plus"></i>
-                    </div>
-                    <div class="activity-text">
-                        <p>Anda login ke sistem</p>
-                        <div class="activity-time">Baru saja</div>
-                    </div>
-                </div>
+        <div class="quick-actions">
+            <a href="{{ route('motor.create') }}" class="action-btn action-primary"><i class="fas fa-plus"></i> Tambah Motor</a>
+            <a href="{{ route('transaksi.create') }}" class="action-btn action-success"><i class="fas fa-file-invoice"></i> Buat Transaksi</a>
+            <a href="{{ route('motor.index') }}" class="action-btn action-info"><i class="fas fa-list"></i> Lihat Motor</a>
+            <a href="{{ route('transaksi.index') }}" class="action-btn action-primary"><i class="fas fa-receipt"></i> Lihat Transaksi</a>
+        </div>
 
-                <div class="activity-item">
-                    <div class="activity-icon" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
-                        <i class="fas fa-check"></i>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="chart-section">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                        <h5 style="margin:0"><i class="fas fa-chart-bar" style="color:var(--brand-1);margin-right:8px"></i> Statistik Aktivitas</h5>
+                        <div class="small-note">Periode: <strong>{{ $chartPeriod ?? 'Bulan ini' }}</strong></div>
                     </div>
-                    <div class="activity-text">
-                        <p>Sistem siap digunakan</p>
-                        <div class="activity-time">Hari ini</div>
-                    </div>
+                    <p class="small-note">Data statistik mengenai transaksi dan pengembalian motor</p>
+                    <canvas id="activityChart" height="120"></canvas>
                 </div>
+            </div>
 
-                <div class="activity-item">
-                    <div class="activity-icon" style="background: linear-gradient(135deg, #17a2b8 0%, #00bcd4 100%);">
-                        <i class="fas fa-info-circle"></i>
+            <div class="col-lg-4">
+                <div class="recent-activity">
+                    <h5 style="margin-bottom:12px"><i class="fas fa-history" style="color:var(--brand-1);margin-right:8px"></i> Aktivitas Terbaru</h5>
+
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2))">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </div>
+                        <div>
+                            <p style="margin:0;font-weight:600">Anda login ke sistem</p>
+                            <div class="small-note">{{ now()->diffForHumans() }}</div>
+                        </div>
                     </div>
-                    <div class="activity-text">
-                        <p>Selamat datang di rental motor</p>
-                        <div class="activity-time">Hari pertama</div>
+
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background:linear-gradient(90deg,#28a745,#20c997)">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <p style="margin:0;font-weight:600">Sistem siap digunakan</p>
+                            <div class="small-note">Hari ini</div>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background:linear-gradient(90deg,#17a2b8,#00bcd4)">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div>
+                            <p style="margin:0;font-weight:600">Selamat datang di rental motor</p>
+                            <div class="small-note">Hari pertama</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Chart.js CDN and simple render (uses @json for safe data transfer) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const ctx = document.getElementById('activityChart');
+        if(!ctx) return;
+
+        const labels = @json($chartLabels ?? ['Minggu 1','Minggu 2','Minggu 3','Minggu 4']);
+        const data = @json($chartData ?? [{{ $total_transaksi ?? 0 }}, 12, 18, 6]);
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Transaksi',
+                    data: data,
+                    backgroundColor: 'rgba(102,126,234,0.85)',
+                    borderRadius: 6,
+                    barThickness: 18
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {legend:{display:false}},
+                scales: {
+                    y: {beginAtZero:true,grid:{color:'rgba(0,0,0,0.04)'}},
+                    x: {grid:{display:false}}
+                }
+            }
+        });
+    });
+</script>
 </div>
 @endsection
