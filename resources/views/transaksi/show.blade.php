@@ -137,7 +137,7 @@
                         <div class="detail-row">
                             <div class="detail-group">
                                 <div class="detail-label">Merk</div>
-                                <div class="detail-value">{{ $transaksi->motor->Merk_motor }}</div>
+                                <div class="detail-value">{{ $transaksi->motor->Merk_motor }} - {{ $transaksi->motor->Warna_motor }}</div>
                             </div>
                             <div class="detail-group">
                                 <div class="detail-label">Warna</div>

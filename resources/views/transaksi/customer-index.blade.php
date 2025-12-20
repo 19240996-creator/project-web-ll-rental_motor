@@ -21,6 +21,11 @@
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         border-left: 5px solid #667eea;
         transition: all 0.3s ease;
+        color: #333 !important;
+    }
+
+    .booking-card * {
+        color: inherit !important;
     }
 
     .booking-card:hover {
@@ -39,8 +44,13 @@
 
     .booking-card-title {
         font-weight: bold;
-        color: #333;
+        color: #000 !important;
         margin: 0;
+    }
+
+    .booking-card-title i,
+    .booking-card-title * {
+        color: #000 !important;
     }
 
     .booking-card-id {
@@ -81,12 +91,22 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 15px;
         margin-bottom: 15px;
+        color: #333 !important;
+    }
+
+    .booking-details * {
+        color: inherit !important;
     }
 
     .detail-item {
         padding: 12px;
         background: #f8f9fa;
         border-radius: 8px;
+        color: #333 !important;
+    }
+
+    .detail-item * {
+        color: inherit !important;
     }
 
     .detail-label {
@@ -106,6 +126,25 @@
     .detail-value.price {
         color: #667eea;
         font-size: 18px;
+    }
+
+    .detail-item.motor-info {
+        background: #e8edf7;
+        color: #333;
+    }
+
+    .detail-item.motor-info .detail-label {
+        color: #333 !important;
+    }
+
+    .detail-item.motor-info .detail-value {
+        color: #000 !important;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .detail-item.motor-info .detail-value * {
+        color: #000 !important;
     }
 
     .booking-actions {
@@ -222,8 +261,8 @@
                     <div class="booking-card">
                         <div class="booking-card-header">
                             <div>
-                                <h5 class="booking-card-title">
-                                    <i class="fas fa-motorcycle"></i> {{ $booking->motor->Merk_motor ?? 'Motor' }}
+                                <h5 class="booking-card-title" style="color: #000 !important;">
+                                    <i class="fas fa-motorcycle"></i> {{ $booking->motor->Merk_motor ?? 'Motor' }} - {{ $booking->motor->Warna_motor ?? '' }}
                                 </h5>
                                 <small class="booking-card-id">ID: {{ $booking->Id_transaksi }}</small>
                             </div>
@@ -233,6 +272,11 @@
                         </div>
 
                         <div class="booking-details">
+                            <div class="detail-item motor-info">
+                                <div class="detail-label"><i class="fas fa-motorcycle"></i> Keterangan Motor</div>
+                                <div class="detail-value" style="color: #000 !important;">{{ $booking->motor->Merk_motor }} - {{ $booking->motor->Warna_motor }}</div>
+                            </div>
+
                             <div class="detail-item">
                                 <div class="detail-label"><i class="fas fa-calendar"></i> Tanggal Sewa</div>
                                 <div class="detail-value">{{ \Carbon\Carbon::parse($booking->Tanggal_sewa)->format('d M Y') }}</div>

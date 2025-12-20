@@ -177,10 +177,7 @@
                                 <select class="form-select @error('Id_motor') is-invalid @enderror" 
                                         id="Id_motor" name="Id_motor" required onchange="updateMotorInfo()">
                                     <option value="">-- Pilih Motor --</option>
-                                    @php
-                                        $available_motors = \App\Models\Motor::where('Status_motor', 'Tersedia')->get();
-                                    @endphp
-                                    @foreach($available_motors as $m)
+                                    @foreach($motors as $m)
                                         <option value="{{ $m->Id_motor }}" data-price="{{ $m->Harga }}">
                                             {{ $m->Merk_motor }} - {{ $m->Warna_motor }} 
                                             (Rp {{ number_format($m->Harga, 0, ',', '.') }}/hari)

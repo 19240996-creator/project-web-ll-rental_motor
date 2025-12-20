@@ -42,7 +42,10 @@ class TransaksiController extends Controller
                     ->firstOrFail();
             }
             
-            return view('transaksi.customer-create', compact('motor'));
+            // Ambil semua motor yang tersedia
+            $motors = Motor::where('Status_motor', 'Tersedia')->get();
+            
+            return view('transaksi.customer-create', compact('motor', 'motors'));
         }
         
         // Admin form

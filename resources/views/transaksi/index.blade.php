@@ -36,7 +36,7 @@
                         <td>{{ $key + 1 }}</td>
                         <td><strong>{{ $transaksi->Id_transaksi }}</strong></td>
                         <td>{{ $transaksi->user->name ?? '-' }}</td>
-                        <td>{{ $transaksi->motor->Merk_motor ?? '-' }} ({{ $transaksi->Id_motor }})</td>
+                        <td>{{ $transaksi->motor->Merk_motor ?? '-' }} - {{ $transaksi->motor->Warna_motor ?? '-' }}</td>
                         <td>{{ $transaksi->Tanggal_sewa }}</td>
                         <td>{{ $transaksi->Tanggal_kembali }}</td>
                         <td>Rp {{ number_format($transaksi->Total_biaya, 0, ',', '.') }}</td>
