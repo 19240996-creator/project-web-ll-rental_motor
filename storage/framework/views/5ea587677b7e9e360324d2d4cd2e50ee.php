@@ -1,8 +1,8 @@
-@extends('layouts.app')
 
-@section('title', 'Detail Booking - Rental Motor')
 
-@section('content')
+<?php $__env->startSection('title', 'Detail Booking - Rental Motor'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .detail-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -111,22 +111,23 @@
         <h1 class="h3 mb-0">
             <i class="fas fa-receipt"></i> Detail Booking
         </h1>
-        <p class="mb-0 mt-2">ID: {{ $transaksi->Id_transaksi }}</p>
+        <p class="mb-0 mt-2">ID: <?php echo e($transaksi->Id_transaksi); ?></p>
     </div>
 
     <div class="row">
         <div class="col-lg-8">
-            {{-- Status --}}
+            
             <div class="detail-card">
                 <h5 class="detail-card-title">
                     <i class="fas fa-info-circle"></i> Status Pemesanan
                 </h5>
-                <span class="badge status-{{ strtolower(str_replace(' ', '_', $transaksi->Status_sewa)) }}">
-                    {{ ucfirst($transaksi->Status_sewa) }}
+                <span class="badge status-<?php echo e(strtolower(str_replace(' ', '_', $transaksi->Status_sewa))); ?>">
+                    <?php echo e(ucfirst($transaksi->Status_sewa)); ?>
+
                 </span>
             </div>
 
-            {{-- Motor Info --}}
+            
             <div class="detail-card">
                 <h5 class="detail-card-title">
                     <i class="fas fa-motorcycle"></i> Informasi Motor
@@ -137,26 +138,26 @@
                         <div class="detail-row">
                             <div class="detail-group">
                                 <div class="detail-label">Merk</div>
-                                <div class="detail-value">{{ $transaksi->motor->Merk_motor }} - {{ $transaksi->motor->Warna_motor }}</div>
+                                <div class="detail-value"><?php echo e($transaksi->motor->Merk_motor); ?> - <?php echo e($transaksi->motor->Warna_motor); ?></div>
                             </div>
                             <div class="detail-group">
                                 <div class="detail-label">Warna</div>
-                                <div class="detail-value">{{ $transaksi->motor->Warna_motor }}</div>
+                                <div class="detail-value"><?php echo e($transaksi->motor->Warna_motor); ?></div>
                             </div>
                             <div class="detail-group">
                                 <div class="detail-label">Plat Nomor</div>
-                                <div class="detail-value">{{ $transaksi->motor->Plat_nomor ?? 'N/A' }}</div>
+                                <div class="detail-value"><?php echo e($transaksi->motor->Plat_nomor ?? 'N/A'); ?></div>
                             </div>
                             <div class="detail-group">
                                 <div class="detail-label">Harga/Hari</div>
-                                <div class="detail-value text-success">Rp {{ number_format($transaksi->motor->Harga, 0, ',', '.') }}</div>
+                                <div class="detail-value text-success">Rp <?php echo e(number_format($transaksi->motor->Harga, 0, ',', '.')); ?></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Dates and Pricing --}}
+            
             <div class="detail-card">
                 <h5 class="detail-card-title">
                     <i class="fas fa-calendar-alt"></i> Tanggal & Harga
@@ -164,41 +165,41 @@
                 <div class="detail-row">
                     <div class="detail-group">
                         <div class="detail-label">Tanggal Mulai Sewa</div>
-                        <div class="detail-value">{{ \Carbon\Carbon::parse($transaksi->Tanggal_sewa)->format('d M Y') }}</div>
+                        <div class="detail-value"><?php echo e(\Carbon\Carbon::parse($transaksi->Tanggal_sewa)->format('d M Y')); ?></div>
                     </div>
                     <div class="detail-group">
                         <div class="detail-label">Tanggal Kembali</div>
-                        <div class="detail-value">{{ \Carbon\Carbon::parse($transaksi->Tanggal_kembali)->format('d M Y') }}</div>
+                        <div class="detail-value"><?php echo e(\Carbon\Carbon::parse($transaksi->Tanggal_kembali)->format('d M Y')); ?></div>
                     </div>
                     <div class="detail-group">
                         <div class="detail-label">Durasi Sewa</div>
                         <div class="detail-value">
-                            {{ \Carbon\Carbon::parse($transaksi->Tanggal_kembali)->diffInDays(\Carbon\Carbon::parse($transaksi->Tanggal_sewa)) + 1 }} Hari
+                            <?php echo e(\Carbon\Carbon::parse($transaksi->Tanggal_kembali)->diffInDays(\Carbon\Carbon::parse($transaksi->Tanggal_sewa)) + 1); ?> Hari
                         </div>
                     </div>
                     <div class="detail-group">
                         <div class="detail-label">Total Biaya</div>
-                        <div class="detail-value text-primary">Rp {{ number_format($transaksi->Total_biaya, 0, ',', '.') }}</div>
+                        <div class="detail-value text-primary">Rp <?php echo e(number_format($transaksi->Total_biaya, 0, ',', '.')); ?></div>
                     </div>
                     <div class="detail-group">
                         <div class="detail-label">Metode Pembayaran</div>
                         <div class="detail-value">
-                            @if($transaksi->metode_pembayaran === 'cash')
+                            <?php if($transaksi->metode_pembayaran === 'cash'): ?>
                                 <span class="badge bg-success"><i class="fas fa-money-bill"></i> Cash</span>
-                            @elseif($transaksi->metode_pembayaran === 'qr')
+                            <?php elseif($transaksi->metode_pembayaran === 'qr'): ?>
                                 <span class="badge bg-info"><i class="fas fa-qrcode"></i> QR Code</span>
-                            @elseif($transaksi->metode_pembayaran === 'bank')
+                            <?php elseif($transaksi->metode_pembayaran === 'bank'): ?>
                                 <span class="badge bg-warning"><i class="fas fa-university"></i> Transfer Bank</span>
-                            @else
+                            <?php else: ?>
                                 <span class="badge bg-secondary">Belum ditentukan</span>
-                            @endif
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Pengembalian Info --}}
-            @if($transaksi->pengembalian)
+            
+            <?php if($transaksi->pengembalian): ?>
                 <div class="detail-card">
                     <h5 class="detail-card-title">
                         <i class="fas fa-undo"></i> Informasi Pengembalian
@@ -206,26 +207,27 @@
                     <div class="detail-row">
                         <div class="detail-group">
                             <div class="detail-label">Tanggal Pengembalian Rencana</div>
-                            <div class="detail-value">{{ \Carbon\Carbon::parse($transaksi->Tanggal_kembali)->format('d M Y') }}</div>
+                            <div class="detail-value"><?php echo e(\Carbon\Carbon::parse($transaksi->Tanggal_kembali)->format('d M Y')); ?></div>
                         </div>
                         <div class="detail-group">
                             <div class="detail-label">Tanggal Pengembalian Aktual</div>
                             <div class="detail-value">
-                                @if($transaksi->pengembalian->Tanggal_kembali_sebenarnya)
-                                    {{ \Carbon\Carbon::parse($transaksi->pengembalian->Tanggal_kembali_sebenarnya)->format('d M Y') }}
-                                @else
+                                <?php if($transaksi->pengembalian->Tanggal_kembali_sebenarnya): ?>
+                                    <?php echo e(\Carbon\Carbon::parse($transaksi->pengembalian->Tanggal_kembali_sebenarnya)->format('d M Y')); ?>
+
+                                <?php else: ?>
                                     <span class="text-muted">Belum dikembalikan</span>
-                                @endif
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="detail-group">
                             <div class="detail-label">Status Pengembalian</div>
-                            <div class="detail-value">{{ ucfirst($transaksi->pengembalian->Status_pengembalian ?? 'Diproses') }}</div>
+                            <div class="detail-value"><?php echo e(ucfirst($transaksi->pengembalian->Status_pengembalian ?? 'Diproses')); ?></div>
                         </div>
                     </div>
 
-                    {{-- Denda if any --}}
-                    @php
+                    
+                    <?php
                         $denda = 0;
                         if ($transaksi->pengembalian->Tanggal_kembali_sebenarnya) {
                             $actualDate = \Carbon\Carbon::parse($transaksi->pengembalian->Tanggal_kembali_sebenarnya);
@@ -235,73 +237,77 @@
                                 $denda = $daysLate * $transaksi->motor->Harga;
                             }
                         }
-                    @endphp
+                    ?>
 
-                    @if($denda > 0)
+                    <?php if($denda > 0): ?>
                         <div class="denda-alert" style="margin-top: 15px;">
                             <h6 style="margin-bottom: 10px;">
                                 <i class="fas fa-exclamation-triangle"></i> Denda Keterlambatan
                             </h6>
                             <div style="margin-bottom: 10px;">
                                 <strong>Terlambat:</strong> 
-                                @php
+                                <?php
                                     $daysLate = \Carbon\Carbon::parse($transaksi->pengembalian->Tanggal_kembali_sebenarnya)->diffInDays(\Carbon\Carbon::parse($transaksi->Tanggal_kembali));
-                                @endphp
-                                {{ $daysLate }} hari
+                                ?>
+                                <?php echo e($daysLate); ?> hari
                             </div>
                             <div style="margin-bottom: 10px;">
-                                <strong>Harga/Hari:</strong> Rp {{ number_format($transaksi->motor->Harga, 0, ',', '.') }}
+                                <strong>Harga/Hari:</strong> Rp <?php echo e(number_format($transaksi->motor->Harga, 0, ',', '.')); ?>
+
                             </div>
                             <div style="font-size: 18px; font-weight: bold; color: #dc3545;">
-                                Total Denda: Rp {{ number_format($denda, 0, ',', '.') }}
+                                Total Denda: Rp <?php echo e(number_format($denda, 0, ',', '.')); ?>
+
                             </div>
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
-            @endif
+            <?php endif; ?>
         </div>
 
-        {{-- Sidebar --}}
+        
         <div class="col-lg-4">
-            {{-- Customer Info --}}
+            
             <div class="detail-card">
                 <h5 class="detail-card-title">
                     <i class="fas fa-user"></i> Informasi Penyewa
                 </h5>
                 <div class="detail-group mb-3">
                     <div class="detail-label">Nama</div>
-                    <div class="detail-value">{{ $transaksi->user->name }}</div>
+                    <div class="detail-value"><?php echo e($transaksi->user->name); ?></div>
                 </div>
                 <div class="detail-group mb-3">
                     <div class="detail-label">Email</div>
-                    <div class="detail-value" style="font-size: 14px;">{{ $transaksi->user->email }}</div>
+                    <div class="detail-value" style="font-size: 14px;"><?php echo e($transaksi->user->email); ?></div>
                 </div>
                 <div class="detail-group">
                     <div class="detail-label">No. Telepon</div>
-                    <div class="detail-value">{{ $transaksi->user->no_telepon ?? 'N/A' }}</div>
+                    <div class="detail-value"><?php echo e($transaksi->user->no_telepon ?? 'N/A'); ?></div>
                 </div>
             </div>
 
-            {{-- Admin Info --}}
-            @if($transaksi->admin)
+            
+            <?php if($transaksi->admin): ?>
                 <div class="detail-card">
                     <h5 class="detail-card-title">
                         <i class="fas fa-user-tie"></i> Admin Penangani
                     </h5>
                     <div class="detail-group">
                         <div class="detail-label">Nama Admin</div>
-                        <div class="detail-value">{{ $transaksi->admin->Nama_admin ?? 'N/A' }}</div>
+                        <div class="detail-value"><?php echo e($transaksi->admin->Nama_admin ?? 'N/A'); ?></div>
                     </div>
                 </div>
-            @endif
+            <?php endif; ?>
 
-            {{-- Action Buttons --}}
+            
             <div class="button-group">
-                <a href="{{ Auth::user()->role === 'customer' ? route('transaksi.index') : route('transaksi.index') }}" class="btn btn-secondary w-100">
+                <a href="<?php echo e(Auth::user()->role === 'customer' ? route('transaksi.index') : route('transaksi.index')); ?>" class="btn btn-secondary w-100">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
             </div>
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\PROJECT AKHIR WEB II\project-web-ll-rental_motor\resources\views/transaksi/show.blade.php ENDPATH**/ ?>

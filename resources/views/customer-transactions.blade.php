@@ -83,6 +83,19 @@
                                 <strong class="text-primary">Rp {{ number_format($transaction->Total_biaya ?? 0, 0, ',', '.') }}</strong>
                             </div>
                             
+                            <div class="mb-3">
+                                <small class="text-muted d-block"><i class="fas fa-credit-card"></i> Metode Pembayaran</small>
+                                @if($transaction->metode_pembayaran === 'cash')
+                                    <span class="badge bg-success"><i class="fas fa-money-bill"></i> Cash</span>
+                                @elseif($transaction->metode_pembayaran === 'qr')
+                                    <span class="badge bg-info"><i class="fas fa-qrcode"></i> QR Code</span>
+                                @elseif($transaction->metode_pembayaran === 'bank')
+                                    <span class="badge bg-warning text-dark"><i class="fas fa-university"></i> Transfer Bank</span>
+                                @else
+                                    <span class="badge bg-secondary">Belum ditentukan</span>
+                                @endif
+                            </div>
+                            
                             @if(isset($transaction->denda) && $transaction->denda > 0)
                                 <div class="alert alert-warning mb-3 py-2 px-3" role="alert">
                                     <small>

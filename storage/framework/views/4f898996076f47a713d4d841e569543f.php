@@ -1,8 +1,8 @@
-@extends('layouts.app')
 
-@section('title', 'Pesan Motor - Rental Motor')
 
-@section('content')
+<?php $__env->startSection('title', 'Pesan Motor - Rental Motor'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .booking-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -157,41 +157,56 @@
     <div class="row">
         <div class="col-lg-8">
             <div class="booking-form">
-                <form action="{{ route('transaksi.store') }}" method="POST" id="bookingForm">
-                    @csrf
+                <form action="<?php echo e(route('transaksi.store')); ?>" method="POST" id="bookingForm">
+                    <?php echo csrf_field(); ?>
 
-                    {{-- Motor Section --}}
+                    
                     <div class="form-section">
                         <h6><i class="fas fa-motorcycle"></i> Pilih Motor</h6>
                         
-                        @if($motor)
-                            {{-- Motor already selected --}}
-                            <input type="hidden" name="Id_motor" value="{{ $motor->Id_motor }}" id="Id_motor">
+                        <?php if($motor): ?>
+                            
+                            <input type="hidden" name="Id_motor" value="<?php echo e($motor->Id_motor); ?>" id="Id_motor">
                             <div class="alert alert-info">
                                 <i class="fas fa-check-circle"></i>
-                                <strong>Motor Dipilih:</strong> {{ $motor->Merk_motor }} - {{ $motor->Warna_motor }}
+                                <strong>Motor Dipilih:</strong> <?php echo e($motor->Merk_motor); ?> - <?php echo e($motor->Warna_motor); ?>
+
                             </div>
-                        @else
-                            {{-- Motor selection dropdown --}}
+                        <?php else: ?>
+                            
                             <div class="form-group mb-3">
-                                <select class="form-select @error('Id_motor') is-invalid @enderror" 
+                                <select class="form-select <?php $__errorArgs = ['Id_motor'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                                         id="Id_motor" name="Id_motor" required onchange="updateMotorInfo()">
                                     <option value="">-- Pilih Motor --</option>
-                                    @foreach($motors as $m)
-                                        <option value="{{ $m->Id_motor }}" data-price="{{ $m->Harga }}">
-                                            {{ $m->Merk_motor }} - {{ $m->Warna_motor }} 
-                                            (Rp {{ number_format($m->Harga, 0, ',', '.') }}/hari)
+                                    <?php $__currentLoopData = $motors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($m->Id_motor); ?>" data-price="<?php echo e($m->Harga); ?>">
+                                            <?php echo e($m->Merk_motor); ?> - <?php echo e($m->Warna_motor); ?> 
+                                            (Rp <?php echo e(number_format($m->Harga, 0, ',', '.')); ?>/hari)
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
-                                @error('Id_motor')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
+                                <?php $__errorArgs = ['Id_motor'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
-                        @endif
+                        <?php endif; ?>
                     </div>
 
-                    {{-- Dates Section --}}
+                    
                     <div class="form-section">
                         <h6><i class="fas fa-calendar-alt"></i> Tanggal Pemesanan</h6>
                         
@@ -202,15 +217,29 @@
                                         <i class="fas fa-play-circle text-success"></i> Tanggal Mulai Sewa
                                     </label>
                                     <input type="date" 
-                                           class="form-control @error('Tanggal_sewa') is-invalid @enderror" 
+                                           class="form-control <?php $__errorArgs = ['Tanggal_sewa'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                                            id="Tanggal_sewa" name="Tanggal_sewa" 
-                                           min="{{ date('Y-m-d') }}"
+                                           min="<?php echo e(date('Y-m-d')); ?>"
                                            required 
                                            onchange="calculatePrice()">
                                     <small class="form-text text-muted">Tanggal mulai sewa motor</small>
-                                    @error('Tanggal_sewa')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
+                                    <?php $__errorArgs = ['Tanggal_sewa'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
 
@@ -220,20 +249,34 @@
                                         <i class="fas fa-stop-circle text-danger"></i> Tanggal Kembali
                                     </label>
                                     <input type="date" 
-                                           class="form-control @error('Tanggal_kembali') is-invalid @enderror" 
+                                           class="form-control <?php $__errorArgs = ['Tanggal_kembali'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                                            id="Tanggal_kembali" name="Tanggal_kembali" 
                                            required 
                                            onchange="calculatePrice()">
                                     <small class="form-text text-muted">Tanggal mengembalikan motor</small>
-                                    @error('Tanggal_kembali')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
+                                    <?php $__errorArgs = ['Tanggal_kembali'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {{-- Price Breakdown --}}
+                    
                     <div class="price-breakdown" id="priceBreakdown">
                         <div class="price-row">
                             <span>Harga Per Hari:</span>
@@ -249,7 +292,7 @@
                         </div>
                     </div>
 
-                    {{-- Payment Method Section --}}
+                    
                     <div class="form-section">
                         <h6><i class="fas fa-credit-card"></i> Metode Pembayaran</h6>
                         
@@ -288,23 +331,30 @@
                                     </label>
                                 </div>
                             </div>
-                            @error('metode_pembayaran')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
+                            <?php $__errorArgs = ['metode_pembayaran'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
 
-                    {{-- Submit Buttons --}}
+                    
                     <div class="form-section" style="margin-top: 30px;">
                         <button type="submit" class="btn btn-book">
                             <i class="fas fa-check-circle"></i> Konfirmasi Pemesanan
                         </button>
-                        <a href="{{ route('customer.dashboard') }}" class="btn btn-cancel">
+                        <a href="<?php echo e(route('customer.dashboard')); ?>" class="btn btn-cancel">
                             <i class="fas fa-times-circle"></i> Batal
                         </a>
                     </div>
 
-                    {{-- Info Alert --}}
+                    
                     <div class="info-alert">
                         <i class="fas fa-info-circle"></i>
                         <strong>Informasi:</strong> Pemesanan Anda akan diverifikasi oleh admin dalam 24 jam. 
@@ -314,9 +364,9 @@
             </div>
         </div>
 
-        {{-- Motor Info Sidebar --}}
+        
         <div class="col-lg-4">
-            @if($motor)
+            <?php if($motor): ?>
                 <div class="motor-preview">
                     <div style="font-size: 48px; text-align: center; margin-bottom: 20px;">
                         🏍️
@@ -324,28 +374,28 @@
                     
                     <div class="motor-preview-item">
                         <div class="motor-preview-info w-100">
-                            <h5>{{ $motor->Merk_motor }}</h5>
+                            <h5><?php echo e($motor->Merk_motor); ?></h5>
                             <small>Merk Motor</small>
                         </div>
                     </div>
 
                     <div class="motor-preview-item">
                         <div class="motor-preview-info w-100">
-                            <h5>{{ $motor->Warna_motor }}</h5>
+                            <h5><?php echo e($motor->Warna_motor); ?></h5>
                             <small>Warna</small>
                         </div>
                     </div>
 
                     <div class="motor-preview-item">
                         <div class="motor-preview-info w-100">
-                            <h5>{{ $motor->Plat_nomor ?? 'N/A' }}</h5>
+                            <h5><?php echo e($motor->Plat_nomor ?? 'N/A'); ?></h5>
                             <small>Plat Nomor</small>
                         </div>
                     </div>
 
                     <div class="motor-preview-item">
                         <div class="motor-preview-info w-100">
-                            <h5 class="text-success">Rp {{ number_format($motor->Harga, 0, ',', '.') }}/Hari</h5>
+                            <h5 class="text-success">Rp <?php echo e(number_format($motor->Harga, 0, ',', '.')); ?>/Hari</h5>
                             <small>Harga Sewa</small>
                         </div>
                     </div>
@@ -356,7 +406,7 @@
                         </span>
                     </div>
                 </div>
-            @else
+            <?php else: ?>
                 <div class="motor-preview">
                     <div style="text-align: center; color: #999;">
                         <i class="fas fa-motorcycle" style="font-size: 48px;"></i>
@@ -364,7 +414,7 @@
                         <small>untuk melihat detail informasi</small>
                     </div>
                 </div>
-            @endif
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -405,9 +455,9 @@ function updateMotorInfo() {
 
 // Load initial price if motor is pre-selected
 document.addEventListener('DOMContentLoaded', function() {
-    @if($motor)
-        document.getElementById('hargaPerHari').textContent = 'Rp {{ number_format($motor->Harga, 0, ',', '.') }}';
-    @endif
+    <?php if($motor): ?>
+        document.getElementById('hargaPerHari').textContent = 'Rp <?php echo e(number_format($motor->Harga, 0, ',', '.')); ?>';
+    <?php endif; ?>
     calculatePrice();
 });
 
@@ -432,4 +482,6 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
     }
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\PROJECT AKHIR WEB II\project-web-ll-rental_motor\resources\views/transaksi/customer-create.blade.php ENDPATH**/ ?>

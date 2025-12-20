@@ -63,6 +63,11 @@ class TransaksiController extends Controller
             'Tanggal_kembali' => 'required|date_format:Y-m-d|after_or_equal:Tanggal_sewa',
         ];
         
+        // Jika customer, butuh metode pembayaran
+        if (Auth::user()->role === 'customer') {
+            $rules['metode_pembayaran'] = 'required|in:cash,qr,bank';
+        }
+        
         // Jika admin, butuh Id_admin_rental_motor
         if (Auth::user()->role === 'admin') {
             $rules['Id_admin_rental_motor'] = 'required|exists:admin_sewa_motor,Id_admin_rental_motor';
@@ -95,6 +100,7 @@ class TransaksiController extends Controller
             'Tanggal_kembali' => $request->Tanggal_kembali,
             'Status_sewa' => 'Proses',
             'Total_biaya' => $total_biaya,
+            'metode_pembayaran' => $request->metode_pembayaran ?? null,
         ]);
 
         // Update status motor

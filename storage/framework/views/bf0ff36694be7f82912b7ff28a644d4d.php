@@ -1,8 +1,8 @@
-@extends('layouts.app')
 
-@section('title', 'Booking Saya - Rental Motor')
 
-@section('content')
+<?php $__env->startSection('title', 'Booking Saya - Rental Motor'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .booking-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -223,102 +223,107 @@
                 </h1>
                 <p class="mb-0 mt-2">Kelola semua pemesanan motor Anda di sini</p>
             </div>
-            <a href="{{ route('transaksi.create') }}" class="btn btn-light btn-lg" style="font-weight: bold;">
+            <a href="<?php echo e(route('transaksi.create')); ?>" class="btn btn-light btn-lg" style="font-weight: bold;">
                 <i class="fas fa-plus-circle"></i> Pesan Motor Baru
             </a>
         </div>
     </div>
 
-    @if(session('success'))
+    <?php if(session('success')): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="fas fa-check-circle"></i> {{ session('success') }}
+            <i class="fas fa-check-circle"></i> <?php echo e(session('success')); ?>
+
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-    @endif
+    <?php endif; ?>
 
-    @if(session('error'))
+    <?php if(session('error')): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+            <i class="fas fa-exclamation-circle"></i> <?php echo e(session('error')); ?>
+
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-    @endif
+    <?php endif; ?>
 
-    @if($transaksis->isEmpty())
+    <?php if($transaksis->isEmpty()): ?>
         <div class="empty-state">
             <div class="empty-state-icon">
                 <i class="fas fa-inbox"></i>
             </div>
             <h4 class="empty-state-text">Belum ada pemesanan</h4>
             <p class="empty-state-text">Anda belum membuat pemesanan. Mulai dengan memilih motor yang Anda inginkan.</p>
-            <a href="{{ route('customer.dashboard') }}" class="btn btn-primary btn-lg">
+            <a href="<?php echo e(route('customer.dashboard')); ?>" class="btn btn-primary btn-lg">
                 <i class="fas fa-search"></i> Lihat Motor Tersedia
             </a>
         </div>
-    @else
+    <?php else: ?>
         <div class="row">
-            @foreach($transaksis as $booking)
+            <?php $__currentLoopData = $transaksis; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-lg-6 col-xl-6 mb-3">
                     <div class="booking-card">
                         <div class="booking-card-header">
                             <div>
                                 <h5 class="booking-card-title" style="color: #000 !important;">
-                                    <i class="fas fa-motorcycle"></i> {{ $booking->motor->Merk_motor ?? 'Motor' }} - {{ $booking->motor->Warna_motor ?? '' }}
+                                    <i class="fas fa-motorcycle"></i> <?php echo e($booking->motor->Merk_motor ?? 'Motor'); ?> - <?php echo e($booking->motor->Warna_motor ?? ''); ?>
+
                                 </h5>
-                                <small class="booking-card-id">ID: {{ $booking->Id_transaksi }}</small>
+                                <small class="booking-card-id">ID: <?php echo e($booking->Id_transaksi); ?></small>
                             </div>
-                            <span class="status-badge status-{{ strtolower(str_replace(' ', '_', $booking->Status_sewa)) }}">
-                                {{ ucfirst($booking->Status_sewa) }}
+                            <span class="status-badge status-<?php echo e(strtolower(str_replace(' ', '_', $booking->Status_sewa))); ?>">
+                                <?php echo e(ucfirst($booking->Status_sewa)); ?>
+
                             </span>
                         </div>
 
                         <div class="booking-details">
                             <div class="detail-item motor-info">
                                 <div class="detail-label"><i class="fas fa-motorcycle"></i> Keterangan Motor</div>
-                                <div class="detail-value" style="color: #000 !important;">{{ $booking->motor->Merk_motor }} - {{ $booking->motor->Warna_motor }}</div>
+                                <div class="detail-value" style="color: #000 !important;"><?php echo e($booking->motor->Merk_motor); ?> - <?php echo e($booking->motor->Warna_motor); ?></div>
                             </div>
 
                             <div class="detail-item">
                                 <div class="detail-label"><i class="fas fa-calendar"></i> Tanggal Sewa</div>
-                                <div class="detail-value">{{ \Carbon\Carbon::parse($booking->Tanggal_sewa)->format('d M Y') }}</div>
+                                <div class="detail-value"><?php echo e(\Carbon\Carbon::parse($booking->Tanggal_sewa)->format('d M Y')); ?></div>
                             </div>
 
                             <div class="detail-item">
                                 <div class="detail-label"><i class="fas fa-calendar"></i> Tanggal Kembali</div>
-                                <div class="detail-value">{{ \Carbon\Carbon::parse($booking->Tanggal_kembali)->format('d M Y') }}</div>
+                                <div class="detail-value"><?php echo e(\Carbon\Carbon::parse($booking->Tanggal_kembali)->format('d M Y')); ?></div>
                             </div>
 
                             <div class="detail-item">
                                 <div class="detail-label"><i class="fas fa-info-circle"></i> Durasi</div>
                                 <div class="detail-value">
-                                    {{ \Carbon\Carbon::parse($booking->Tanggal_kembali)->diffInDays(\Carbon\Carbon::parse($booking->Tanggal_sewa)) + 1 }} hari
+                                    <?php echo e(\Carbon\Carbon::parse($booking->Tanggal_kembali)->diffInDays(\Carbon\Carbon::parse($booking->Tanggal_sewa)) + 1); ?> hari
                                 </div>
                             </div>
 
                             <div class="detail-item">
                                 <div class="detail-label"><i class="fas fa-money-bill"></i> Total</div>
                                 <div class="detail-value price">
-                                    Rp {{ number_format($booking->Total_biaya, 0, ',', '.') }}
+                                    Rp <?php echo e(number_format($booking->Total_biaya, 0, ',', '.')); ?>
+
                                 </div>
                             </div>
 
                             <div class="detail-item">
                                 <div class="detail-label"><i class="fas fa-credit-card"></i> Metode Bayar</div>
                                 <div class="detail-value">
-                                    @if($booking->metode_pembayaran === 'cash')
+                                    <?php if($booking->metode_pembayaran === 'cash'): ?>
                                         <span class="badge bg-success"><i class="fas fa-money-bill"></i> Cash</span>
-                                    @elseif($booking->metode_pembayaran === 'qr')
+                                    <?php elseif($booking->metode_pembayaran === 'qr'): ?>
                                         <span class="badge bg-info"><i class="fas fa-qrcode"></i> QR Code</span>
-                                    @elseif($booking->metode_pembayaran === 'bank')
+                                    <?php elseif($booking->metode_pembayaran === 'bank'): ?>
                                         <span class="badge bg-warning"><i class="fas fa-university"></i> Bank</span>
-                                    @else
+                                    <?php else: ?>
                                         <span class="badge bg-secondary">-</span>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
 
-                        {{-- Check if pengembalian exists and has denda --}}
-                        @php
+                        
+                        <?php
                             $pengembalian = $booking->pengembalian;
                             $denda = 0;
                             if ($pengembalian && $pengembalian->Tanggal_kembali_sebenarnya) {
@@ -329,41 +334,43 @@
                                     $denda = $daysLate * $booking->motor->Harga;
                                 }
                             }
-                        @endphp
+                        ?>
 
-                        @if($denda > 0)
+                        <?php if($denda > 0): ?>
                             <div class="denda-alert">
                                 <i class="fas fa-exclamation-triangle"></i>
-                                <strong>Denda Keterlambatan: Rp {{ number_format($denda, 0, ',', '.') }}</strong>
+                                <strong>Denda Keterlambatan: Rp <?php echo e(number_format($denda, 0, ',', '.')); ?></strong>
                                 <p class="mb-0">Motor dikembalikan terlambat dari tanggal rencana.</p>
                             </div>
-                        @endif
+                        <?php endif; ?>
 
                         <div class="booking-actions">
-                            <a href="{{ route('transaksi.show', $booking->Id_transaksi) }}" class="btn-action btn-detail">
+                            <a href="<?php echo e(route('transaksi.show', $booking->Id_transaksi)); ?>" class="btn-action btn-detail">
                                 <i class="fas fa-eye"></i> Detail
                             </a>
-                            @if($booking->Status_sewa === 'Proses')
-                                <form action="{{ route('transaksi.destroy', $booking->Id_transaksi) }}" method="POST" style="display: inline;" 
+                            <?php if($booking->Status_sewa === 'Proses'): ?>
+                                <form action="<?php echo e(route('transaksi.destroy', $booking->Id_transaksi)); ?>" method="POST" style="display: inline;" 
                                       onsubmit="return confirm('Yakin ingin membatalkan pemesanan?');">
-                                    @csrf
-                                    @method('DELETE')
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
                                     <button type="submit" class="btn-action btn-cancel">
                                         <i class="fas fa-times"></i> Batalkan
                                     </button>
                                 </form>
-                            @endif
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
 
         <div style="margin-top: 40px;">
-            <a href="{{ route('customer.dashboard') }}" class="btn btn-primary">
+            <a href="<?php echo e(route('customer.dashboard')); ?>" class="btn btn-primary">
                 <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
             </a>
         </div>
-    @endif
+    <?php endif; ?>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\PROJECT AKHIR WEB II\project-web-ll-rental_motor\resources\views/transaksi/customer-index.blade.php ENDPATH**/ ?>

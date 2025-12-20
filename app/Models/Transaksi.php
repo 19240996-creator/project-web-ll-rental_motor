@@ -21,6 +21,7 @@ class Transaksi extends Model
         'Tanggal_kembali',
         'Status_sewa',
         'Total_biaya',
+        'metode_pembayaran',
         'created_at',
         'updated_at'
     ];
