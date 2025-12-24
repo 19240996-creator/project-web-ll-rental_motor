@@ -23,6 +23,8 @@
                     <th>ID Pengembalian</th>
                     <th>ID Transaksi</th>
                     <th>Tanggal Pengembalian</th>
+                    <th>Tanggal Kembali Sebenarnya</th>
+                    <th>Status</th>
                     <th>Biaya Keterlambatan</th>
                     <th>Catatan</th>
                     <th>Aksi</th>
@@ -30,12 +32,33 @@
             </thead>
             <tbody>
                 @forelse ($pengembalians as $key => $pengembalian)
-                    <tr>
+                    <tr class="@if($pengembalian->Status_pengembalian === 'Dikembalikan_Terlambat') table-danger @endif">
                         <td>{{ $key + 1 }}</td>
                         <td><strong>{{ $pengembalian->Id_pengembalian }}</strong></td>
                         <td>{{ $pengembalian->Id_transaksi }}</td>
-                        <td>{{ $pengembalian->Tanggal_pengembalian }}</td>
-                        <td>Rp {{ number_format($pengembalian->Biaya_keterlambatan, 0, ',', '.') }}</td>
+                        <td>{{ $pengembalian->Tanggal_pengembalian->format('d/m/Y') }}</td>
+                        <td>
+                            @if($pengembalian->Tanggal_kembali_sebenarnya)
+                                {{ $pengembalian->Tanggal_kembali_sebenarnya->format('d/m/Y') }}
+                                @if($pengembalian->Status_pengembalian === 'Dikembalikan_Terlambat')
+                                    <br><small class="text-danger"><strong>TERLAMBAT</strong></small>
+                                @endif
+                            @else
+                                <em class="text-muted">-</em>
+                            @endif
+                        </td>
+                        <td>
+                            <span class="badge bg-{{ $pengembalian->getStatusColor() }}">
+                                {{ $pengembalian->getStatusText() }}
+                            </span>
+                        </td>
+                        <td>
+                            @if($pengembalian->Biaya_keterlambatan > 0)
+                                <strong class="text-danger">Rp {{ number_format($pengembalian->Biaya_keterlambatan, 0, ',', '.') }}</strong>
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
+                        </td>
                         <td>{{ $pengembalian->Catatan ?? '-' }}</td>
                         <td>
                             <form action="{{ route('pengembalian.destroy', $pengembalian->Id_pengembalian) }}" method="POST" style="display:inline;">
@@ -49,7 +72,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center text-muted">Tidak ada data pengembalian</td>
+                        <td colspan="9" class="text-center text-muted">Tidak ada data pengembalian</td>
                     </tr>
                 @endforelse
             </tbody>

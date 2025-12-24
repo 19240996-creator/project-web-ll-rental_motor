@@ -26,10 +26,14 @@ class PengembalianController extends Controller
             'Id_pengembalian' => 'required|unique:pengembalian,Id_pengembalian',
             'Id_transaksi' => 'required',
             'Tanggal_pengembalian' => 'required|date',
+            'Tanggal_kembali_sebenarnya' => 'required|date',
             'Biaya_keterlambatan' => 'numeric|min:0',
         ]);
 
-        Pengembalian::create($request->all());
+        $pengembalian = Pengembalian::create($request->all());
+
+        // Auto-check untuk keterlambatan dan update status + denda
+        $pengembalian->checkAndUpdateLateness();
 
         // Update status transaksi menjadi Selesai
         $transaksi = Transaksi::find($request->Id_transaksi);

@@ -67,5 +67,69 @@ class Pengembalian extends Model
         }
         return $this->calculateDenda();
     }
+
+    /**
+     * Check if return is late and auto-update status
+     */
+    public function checkAndUpdateLateness()
+    {
+        if (!$this->Tanggal_kembali_sebenarnya || !$this->transaksi) {
+            return false;
+        }
+
+        $plannedDate = Carbon::parse($this->transaksi->Tanggal_kembali);
+        $actualDate = Carbon::parse($this->Tanggal_kembali_sebenarnya);
+
+        $isLate = $actualDate->greaterThan($plannedDate);
+
+        if ($isLate) {
+            // Calculate and save denda otomatis jika belum ada
+            if (!$this->Biaya_keterlambatan || $this->Biaya_keterlambatan == 0) {
+                $daysLate = $actualDate->diffInDays($plannedDate);
+                $dailyRate = $this->transaksi->motor->Harga ?? 0;
+                $this->Biaya_keterlambatan = $daysLate * $dailyRate;
+            }
+
+            // Update status ke terlambat
+            $this->Status_pengembalian = 'Dikembalikan_Terlambat';
+            $this->save();
+
+            return true;
+        } else {
+            // Jika tepat waktu, set status dikembalikan
+            if ($this->Status_pengembalian !== 'Dikembalikan') {
+                $this->Status_pengembalian = 'Dikembalikan';
+                $this->save();
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get status badge color
+     */
+    public function getStatusColor()
+    {
+        return match($this->Status_pengembalian) {
+            'Dikembalikan_Terlambat' => 'danger',
+            'Dikembalikan' => 'success',
+            'Diproses' => 'warning',
+            default => 'secondary'
+        };
+    }
+
+    /**
+     * Get status badge text
+     */
+    public function getStatusText()
+    {
+        return match($this->Status_pengembalian) {
+            'Dikembalikan_Terlambat' => 'Terlambat',
+            'Dikembalikan' => 'Dikembalikan',
+            'Diproses' => 'Diproses',
+            default => $this->Status_pengembalian
+        };
+    }
 }
 

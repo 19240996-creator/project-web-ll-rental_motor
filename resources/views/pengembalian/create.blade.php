@@ -45,10 +45,21 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="Tanggal_pengembalian" class="form-label">Tanggal Pengembalian</label>
+                            <label for="Tanggal_pengembalian" class="form-label">Tanggal Pengembalian (Target)</label>
                             <input type="date" class="form-control @error('Tanggal_pengembalian') is-invalid @enderror" 
                                    id="Tanggal_pengembalian" name="Tanggal_pengembalian" required>
+                            <small class="text-muted">Tanggal target pengembalian sesuai kontrak</small>
                             @error('Tanggal_pengembalian')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="Tanggal_kembali_sebenarnya" class="form-label">Tanggal Kembali Sebenarnya <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control @error('Tanggal_kembali_sebenarnya') is-invalid @enderror" 
+                                   id="Tanggal_kembali_sebenarnya" name="Tanggal_kembali_sebenarnya" required>
+                            <small class="text-muted">Tanggal motor benar-benar dikembalikan (untuk deteksi keterlambatan otomatis)</small>
+                            @error('Tanggal_kembali_sebenarnya')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -57,6 +68,7 @@
                             <label for="Biaya_keterlambatan" class="form-label">Biaya Keterlambatan (Rp)</label>
                             <input type="number" class="form-control @error('Biaya_keterlambatan') is-invalid @enderror" 
                                    id="Biaya_keterlambatan" name="Biaya_keterlambatan" value="0" min="0">
+                            <small class="text-muted">Biarkan kosong untuk otomatis terhitung (jika ada keterlambatan)</small>
                             @error('Biaya_keterlambatan')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
