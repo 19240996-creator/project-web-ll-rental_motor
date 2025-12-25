@@ -16,7 +16,8 @@ class PengembalianController extends Controller
 
     public function create()
     {
-        $transaksis = Transaksi::where('Status_sewa', 'Aktif')->get();
+        // Tampilkan transaksi yang belum memiliki pengembalian (belum dikembalikan)
+        $transaksis = Transaksi::whereDoesntHave('pengembalian')->get();
         return view('pengembalian.create', compact('transaksis'));
     }
 
