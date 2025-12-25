@@ -73,7 +73,7 @@ unset($__errorArgs, $__bag); ?>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="Tanggal_pengembalian" class="form-label">Tanggal Pengembalian</label>
+                            <label for="Tanggal_pengembalian" class="form-label">Tanggal Pengembalian (Target)</label>
                             <input type="date" class="form-control <?php $__errorArgs = ['Tanggal_pengembalian'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -83,7 +83,32 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" 
                                    id="Tanggal_pengembalian" name="Tanggal_pengembalian" required>
+                            <small class="text-muted">Tanggal target pengembalian sesuai kontrak</small>
                             <?php $__errorArgs = ['Tanggal_pengembalian'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <div class="invalid-feedback"><?php echo e($message); ?></div>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="Tanggal_kembali_sebenarnya" class="form-label">Tanggal Kembali Sebenarnya <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control <?php $__errorArgs = ['Tanggal_kembali_sebenarnya'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                                   id="Tanggal_kembali_sebenarnya" name="Tanggal_kembali_sebenarnya" required>
+                            <small class="text-muted">Tanggal motor benar-benar dikembalikan (untuk deteksi keterlambatan otomatis)</small>
+                            <?php $__errorArgs = ['Tanggal_kembali_sebenarnya'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -106,6 +131,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" 
                                    id="Biaya_keterlambatan" name="Biaya_keterlambatan" value="0" min="0">
+                            <small class="text-muted">Biarkan kosong untuk otomatis terhitung (jika ada keterlambatan)</small>
                             <?php $__errorArgs = ['Biaya_keterlambatan'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
