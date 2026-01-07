@@ -34,6 +34,8 @@ class Motor extends Model
         'Merk_motor',      // Merk motor (Honda, Yamaha, Suzuki, dll)
         'Nama_motor',      // Nama tipe motor (Beat, Vario, Jupiter, dll)
         'Harga',           // Harga sewa per hari (Rp)
+        'Plat_nomor',      // Nomor plat motor
+        'Tahun_motor',     // Tahun produksi motor
         'Status_motor'     // Status: Tersedia, Disewa, Rusak, Maintenance
     ];
 
