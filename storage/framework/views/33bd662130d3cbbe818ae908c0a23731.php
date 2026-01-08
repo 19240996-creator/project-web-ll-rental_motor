@@ -142,6 +142,9 @@
                     <a class="nav-link <?php echo e(Route::is('customer.transactions') ? 'active' : ''); ?>" href="<?php echo e(route('customer.transactions')); ?>">
                         <i class="fas fa-history"></i> Riwayat Sewa
                     </a>
+                    <a class="nav-link <?php echo e(Route::is('transaksi.*') ? 'active' : ''); ?>" href="<?php echo e(route('transaksi.index')); ?>">
+                        <i class="fas fa-motorcycle"></i> Motor yang Disewa
+                    </a>
                 <?php endif; ?>
             </nav>
         </div>

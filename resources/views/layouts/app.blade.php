@@ -141,6 +141,9 @@
                     <a class="nav-link {{ Route::is('customer.transactions') ? 'active' : '' }}" href="{{ route('customer.transactions') }}">
                         <i class="fas fa-history"></i> Riwayat Sewa
                     </a>
+                    <a class="nav-link {{ Route::is('transaksi.*') ? 'active' : '' }}" href="{{ route('transaksi.index') }}">
+                        <i class="fas fa-motorcycle"></i> Motor yang Disewa
+                    </a>
                 @endif
             </nav>
         </div>
