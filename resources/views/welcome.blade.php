@@ -657,6 +657,11 @@
     <footer>
         <div class="container">
             <p>&copy; 2025 Website Rental Motor. All rights reserved. | Dibuat dengan <i class="fas fa-heart text-danger"></i> oleh Tim GO-JAG</p>
+            <p style="margin-top: 15px; font-size: 14px;">
+                <i class="fas fa-map-marker-alt"></i> Lokasi: Taman Pembaharuan, Purwakarta | 
+                <i class="fas fa-phone"></i> No HP: 085887411516 | 
+                <i class="fas fa-envelope"></i> Email: mahesaikni1@gmail.com
+            </p>
         </div>
     </footer>
 
