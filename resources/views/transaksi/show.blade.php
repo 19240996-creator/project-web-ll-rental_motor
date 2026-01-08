@@ -194,6 +194,38 @@
                             @endif
                         </div>
                     </div>
+
+                    {{-- Bank Payment Info --}}
+                    @if($transaksi->metode_pembayaran === 'bank' && $transaksi->bank_tujuan)
+                        <div class="detail-group">
+                            <div class="detail-label">Bank Tujuan Transfer</div>
+                            <div class="detail-value">
+                                <span class="badge bg-info">{{ $transaksi->bank_tujuan }}</span>
+                            </div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label"><i class="fas fa-user"></i> Atas Nama</div>
+                            <div class="detail-value">PT. GO-JAG Rental Motor</div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label"><i class="fas fa-hashtag"></i> Nomor Rekening</div>
+                            <div class="detail-value" style="font-family: monospace; letter-spacing: 1px; font-size: 18px; color: #667eea;">
+                                1730017287724
+                            </div>
+                            <small class="text-muted mt-2" style="display: block;">Kirimkan bukti transfer untuk verifikasi pembayaran</small>
+                        </div>
+                    @endif
+
+                    {{-- QR Code Payment Display --}}
+                    @if($transaksi->metode_pembayaran === 'qr' && $transaksi->qr_code)
+                        <div class="detail-group">
+                            <div class="detail-label">Kode QR Pembayaran</div>
+                            <div style="text-align: center; margin-top: 10px;">
+                                <img src="{{ $transaksi->qr_code }}" alt="QR Code Pembayaran" style="max-width: 150px; height: auto; border: 2px solid #ddd; padding: 10px; border-radius: 8px;" />
+                            </div>
+                            <small class="text-muted mt-2" style="display: block;">Scan QR code untuk melakukan pembayaran</small>
+                        </div>
+                    @endif
                 </div>
             </div>
 

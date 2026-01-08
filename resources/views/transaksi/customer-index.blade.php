@@ -309,12 +309,31 @@
                                     @elseif($booking->metode_pembayaran === 'qr')
                                         <span class="badge bg-info"><i class="fas fa-qrcode"></i> QR Code</span>
                                     @elseif($booking->metode_pembayaran === 'bank')
-                                        <span class="badge bg-warning"><i class="fas fa-university"></i> Bank</span>
+                                        <span class="badge bg-warning"><i class="fas fa-university"></i> {{ $booking->bank_tujuan ?? 'Bank' }}</span>
                                     @else
                                         <span class="badge bg-secondary">-</span>
                                     @endif
                                 </div>
                             </div>
+
+                            {{-- Show Bank Account if bank transfer --}}
+                            @if($booking->metode_pembayaran === 'bank' && $booking->bank_tujuan)
+                                <div class="detail-item" style="background: #fff8e1; border-left: 4px solid #ff6b35;">
+                                    <div class="detail-label"><i class="fas fa-hashtag"></i> Nomor Rekening</div>
+                                    <div class="detail-value" style="font-family: monospace; letter-spacing: 1px; color: #ff6b35;">
+                                        1730017287724
+                                    </div>
+                                    <small style="display: block; margin-top: 5px; color: #666;">Atas Nama: PT. GO-JAG Rental Motor</small>
+                                </div>
+                            @endif
+
+                            {{-- Show QR Code Preview if available --}}
+                            @if($booking->metode_pembayaran === 'qr' && $booking->qr_code)
+                                <div class="detail-item" style="text-align: center;">
+                                    <div class="detail-label"><i class="fas fa-qrcode"></i> Kode QR</div>
+                                    <img src="{{ $booking->qr_code }}" alt="QR Code" style="max-width: 100px; height: auto; border: 2px solid #ddd; padding: 5px; border-radius: 8px; margin-top: 10px;" />
+                                </div>
+                            @endif
                         </div>
 
                         {{-- Check if pengembalian exists and has denda --}}

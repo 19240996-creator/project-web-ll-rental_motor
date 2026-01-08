@@ -38,6 +38,8 @@ class Transaksi extends Model
         'Status_sewa',       // Status: Proses, Aktif, Selesai, Batal
         'Total_biaya',       // Total biaya sewa (Rp)
         'metode_pembayaran', // Metode: cash, qr, bank
+        'bank_tujuan',       // Pilihan bank tujuan transfer
+        'qr_code',           // QR Code untuk pembayaran
         'created_at',        // Waktu buat record
         'updated_at'         // Waktu update terakhir
     ];

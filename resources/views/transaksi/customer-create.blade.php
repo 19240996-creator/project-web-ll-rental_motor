@@ -256,7 +256,7 @@
                         <div class="form-group mb-3">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <input type="radio" name="metode_pembayaran" id="cash" value="cash" class="form-check-input" required>
+                                    <input type="radio" name="metode_pembayaran" id="cash" value="cash" class="form-check-input" required onchange="togglePaymentOptions()">
                                     <label for="cash" class="form-check-label" style="cursor: pointer; display: flex; align-items: center; padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white;">
                                         <i class="fas fa-money-bill" style="font-size: 24px; margin-right: 12px; color: #28a745;"></i>
                                         <div>
@@ -267,7 +267,7 @@
                                 </div>
                                 
                                 <div class="col-md-6">
-                                    <input type="radio" name="metode_pembayaran" id="qr" value="qr" class="form-check-input" required>
+                                    <input type="radio" name="metode_pembayaran" id="qr" value="qr" class="form-check-input" required onchange="togglePaymentOptions()">
                                     <label for="qr" class="form-check-label" style="cursor: pointer; display: flex; align-items: center; padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white;">
                                         <i class="fas fa-qrcode" style="font-size: 24px; margin-right: 12px; color: #667eea;"></i>
                                         <div>
@@ -278,7 +278,7 @@
                                 </div>
                                 
                                 <div class="col-md-6">
-                                    <input type="radio" name="metode_pembayaran" id="bank" value="bank" class="form-check-input" required>
+                                    <input type="radio" name="metode_pembayaran" id="bank" value="bank" class="form-check-input" required onchange="togglePaymentOptions()">
                                     <label for="bank" class="form-check-label" style="cursor: pointer; display: flex; align-items: center; padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white;">
                                         <i class="fas fa-university" style="font-size: 24px; margin-right: 12px; color: #ff6b35;"></i>
                                         <div>
@@ -291,6 +291,57 @@
                             @error('metode_pembayaran')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
+                        </div>
+
+                        <!-- Bank Selection (shown only when bank transfer is selected) -->
+                        <div id="bankOptions" style="display: none; margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                            <h6><i class="fas fa-bank"></i> Pilih Bank Tujuan Transfer</h6>
+                            <div class="form-group">
+                                <select class="form-select" id="bank_tujuan" name="bank_tujuan" onchange="showBankDetails()">
+                                    <option value="">-- Pilih Bank --</option>
+                                    <option value="BCA">🏦 BCA (Bank Central Asia)</option>
+                                    <option value="Mandiri">🏦 Mandiri (Bank Mandiri)</option>
+                                    <option value="BRI">🏦 BRI (Bank Rakyat Indonesia)</option>
+                                    <option value="BNI">🏦 BNI (Bank Negara Indonesia)</option>
+                                    <option value="Lainnya">🏦 Bank Lainnya</option>
+                                </select>
+                                <small class="form-text text-muted">Pilih bank untuk instruksi transfer yang akan diberikan admin</small>
+                            </div>
+
+                            <!-- Bank Account Details -->
+                            <div id="bankDetails" style="display: none; margin-top: 15px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #667eea;">
+                                <h6 style="margin-bottom: 10px;"><i class="fas fa-credit-card"></i> Detail Rekening</h6>
+                                <div class="detail-row" style="display: grid; gap: 10px;">
+                                    <div style="padding: 10px; background: #f0f4ff; border-radius: 6px;">
+                                        <small style="color: #666; display: block; margin-bottom: 5px;">Nama Bank</small>
+                                        <strong id="bankName" style="font-size: 16px;">-</strong>
+                                    </div>
+                                    <div style="padding: 10px; background: #f0f4ff; border-radius: 6px;">
+                                        <small style="color: #666; display: block; margin-bottom: 5px;"><i class="fas fa-user"></i> Atas Nama</small>
+                                        <strong style="font-size: 16px;">PT. GO-JAG Rental Motor</strong>
+                                    </div>
+                                    <div style="padding: 10px; background: #f0f4ff; border-radius: 6px;">
+                                        <small style="color: #666; display: block; margin-bottom: 5px;"><i class="fas fa-hashtag"></i> Nomor Rekening</small>
+                                        <strong id="bankAccount" style="font-size: 18px; color: #667eea; font-family: monospace; letter-spacing: 2px;">-</strong>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 15px; padding: 12px; background: #e8f5e9; border-radius: 6px; border-left: 4px solid #28a745;">
+                                    <small><i class="fas fa-info-circle text-success"></i> Kirimkan bukti transfer ke admin untuk verifikasi</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- QR Code Display (shown only when QR is selected) -->
+                        <div id="qrOptions" style="display: none; margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                            <h6><i class="fas fa-qrcode"></i> Kode QR untuk Pembayaran</h6>
+                            <div style="text-align: center; padding: 20px;">
+                                <div id="qrCodeContainer" style="display: inline-block; padding: 15px; background: white; border-radius: 8px; border: 2px solid #ddd;">
+                                    <img id="qrCodeImage" src="" alt="QR Code" style="max-width: 200px; height: auto;" />
+                                </div>
+                            </div>
+                            <small class="form-text text-muted text-center d-block">
+                                <i class="fas fa-info-circle"></i> Scan QR code ini dengan e-wallet Anda untuk membayar
+                            </small>
                         </div>
                     </div>
 
@@ -403,6 +454,63 @@ function updateMotorInfo() {
     calculatePrice();
 }
 
+function togglePaymentOptions() {
+    const cashRadio = document.getElementById('cash');
+    const qrRadio = document.getElementById('qr');
+    const bankRadio = document.getElementById('bank');
+    
+    const bankOptions = document.getElementById('bankOptions');
+    const qrOptions = document.getElementById('qrOptions');
+    
+    // Hide all options first
+    bankOptions.style.display = 'none';
+    qrOptions.style.display = 'none';
+    
+    // Show selected option
+    if (bankRadio.checked) {
+        bankOptions.style.display = 'block';
+    } else if (qrRadio.checked) {
+        qrOptions.style.display = 'block';
+        generateQRCode();
+    }
+}
+
+function showBankDetails() {
+    const bankSelect = document.getElementById('bank_tujuan');
+    const bankDetails = document.getElementById('bankDetails');
+    const bankName = document.getElementById('bankName');
+    const bankAccount = document.getElementById('bankAccount');
+    
+    const accountNumber = '1730017287724'; // Nomor rekening utama
+    
+    const bankInfo = {
+        'BCA': 'BCA (Bank Central Asia)',
+        'Mandiri': 'Mandiri (Bank Mandiri)',
+        'BRI': 'BRI (Bank Rakyat Indonesia)',
+        'BNI': 'BNI (Bank Negara Indonesia)',
+        'Lainnya': 'Bank Lainnya'
+    };
+    
+    if (bankSelect.value) {
+        bankName.textContent = bankInfo[bankSelect.value] || '-';
+        bankAccount.textContent = accountNumber;
+        bankDetails.style.display = 'block';
+    } else {
+        bankDetails.style.display = 'none';
+    }
+}
+
+function generateQRCode() {
+    // Generate QR code dengan dummy data (di production, ini bisa berisi info transaksi)
+    const qrText = 'https://payment.rental-motor.test?amount=100000&ref=TRX-' + Math.random().toString(36).substring(7);
+    
+    // Menggunakan QR code API dari qr-server.com
+    const qrCodeUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(qrText);
+    
+    const qrCodeImage = document.getElementById('qrCodeImage');
+    qrCodeImage.src = qrCodeUrl;
+}
+
 // Load initial price if motor is pre-selected
 document.addEventListener('DOMContentLoaded', function() {
     @if($motor)
@@ -415,6 +523,8 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
     const tanggalSewa = document.getElementById('Tanggal_sewa').value;
     const tanggalKembali = document.getElementById('Tanggal_kembali').value;
+    const bankRadio = document.getElementById('bank');
+    const bankSelect = document.getElementById('bank_tujuan');
     
     if (!tanggalSewa || !tanggalKembali) {
         e.preventDefault();
@@ -428,6 +538,13 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
     if (endDate < startDate) {
         e.preventDefault();
         alert('Tanggal kembali harus sama atau lebih besar dari tanggal sewa!');
+        return;
+    }
+
+    // Validasi bank selection jika memilih transfer bank
+    if (bankRadio.checked && !bankSelect.value) {
+        e.preventDefault();
+        alert('Pilih bank tujuan transfer terlebih dahulu!');
         return;
     }
 });

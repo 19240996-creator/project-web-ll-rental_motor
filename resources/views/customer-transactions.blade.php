@@ -90,11 +90,28 @@
                                 @elseif($transaction->metode_pembayaran === 'qr')
                                     <span class="badge bg-info"><i class="fas fa-qrcode"></i> QR Code</span>
                                 @elseif($transaction->metode_pembayaran === 'bank')
-                                    <span class="badge bg-warning text-dark"><i class="fas fa-university"></i> Transfer Bank</span>
+                                    <span class="badge bg-warning text-dark"><i class="fas fa-university"></i> {{ $transaction->bank_tujuan ?? 'Transfer Bank' }}</span>
                                 @else
                                     <span class="badge bg-secondary">Belum ditentukan</span>
                                 @endif
                             </div>
+
+                            {{-- Show Bank Account if bank transfer --}}
+                            @if($transaction->metode_pembayaran === 'bank' && $transaction->bank_tujuan)
+                                <div style="padding: 12px; background: #fff8e1; border-radius: 6px; border-left: 4px solid #ff6b35; margin-bottom: 12px;">
+                                    <small style="color: #666; display: block; margin-bottom: 5px;"><i class="fas fa-hashtag"></i> Nomor Rekening</small>
+                                    <strong style="font-size: 16px; color: #ff6b35; font-family: monospace; letter-spacing: 1px;">1730017287724</strong>
+                                    <small style="display: block; margin-top: 5px; color: #666;">Atas Nama: PT. GO-JAG Rental Motor</small>
+                                </div>
+                            @endif
+
+                            {{-- Show QR Code if available --}}
+                            @if($transaction->metode_pembayaran === 'qr' && $transaction->qr_code)
+                                <div class="mb-3" style="text-align: center;">
+                                    <small class="text-muted d-block"><i class="fas fa-qrcode"></i> Kode QR Pembayaran</small>
+                                    <img src="{{ $transaction->qr_code }}" alt="QR Code" style="max-width: 120px; height: auto; border: 2px solid #ddd; padding: 8px; border-radius: 8px; margin-top: 8px;" />
+                                </div>
+                            @endif
                             
                             @if(isset($transaction->denda) && $transaction->denda > 0)
                                 <div class="alert alert-warning mb-3 py-2 px-3" role="alert">

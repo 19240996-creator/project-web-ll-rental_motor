@@ -105,6 +105,11 @@ class TransaksiController extends Controller
         // Jika customer, tambahkan validasi metode pembayaran
         if (Auth::user()->role === 'customer') {
             $rules['metode_pembayaran'] = 'required|in:cash,qr,bank'; // Pilihan pembayaran terbatas
+            
+            // Validasi bank tujuan jika metode pembayaran adalah bank
+            if ($request->metode_pembayaran === 'bank') {
+                $rules['bank_tujuan'] = 'required|in:BCA,Mandiri,BRI,BNI,Lainnya';
+            }
         }
         
         // Jika admin, harus pilih admin yang menangani transaksi
@@ -134,6 +139,13 @@ class TransaksiController extends Controller
         // Tentukan admin yang menangani (dari request atau admin pertama di database)
         $admin_id = $request->Id_admin_rental_motor ?? Admin::first()->Id_admin_rental_motor;
 
+        // Generate QR code untuk metode pembayaran QR
+        $qr_code = null;
+        if ($request->metode_pembayaran === 'qr') {
+            $qrText = 'https://payment.rental-motor.test?amount=' . $total_biaya . '&ref=TRX-' . Str::random(10);
+            $qr_code = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' . urlencode($qrText);
+        }
+
         // Buat record transaksi baru dengan status "Proses" (menunggu persetujuan admin)
         Transaksi::create([
             'Id_transaksi' => 'TRX-' . Str::random(10), // Generate ID unik
@@ -145,6 +157,8 @@ class TransaksiController extends Controller
             'Status_sewa' => 'Proses', // Status awal: menunggu persetujuan
             'Total_biaya' => $total_biaya,
             'metode_pembayaran' => $request->metode_pembayaran ?? null,
+            'bank_tujuan' => $request->bank_tujuan ?? null, // Simpan pilihan bank
+            'qr_code' => $qr_code, // Simpan QR code URL
         ]);
 
         // Update status motor menjadi "Disewa" agar tidak bisa disewa orang lain
