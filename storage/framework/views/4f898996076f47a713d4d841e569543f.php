@@ -472,17 +472,48 @@ unset($__errorArgs, $__bag); ?>
 
 <script>
 function calculatePrice() {
-    const motorSelect = document.getElementById('Id_motor');
     const tanggalSewa = document.getElementById('Tanggal_sewa').value;
     const tanggalKembali = document.getElementById('Tanggal_kembali').value;
     
-    if (!motorSelect.value || !tanggalSewa || !tanggalKembali) {
+    let hargaPerHari = 0;
+    
+    // Cari elemen motor (bisa hidden input atau select dropdown)
+    const motorSelect = document.getElementById('Id_motor');
+    const motorIdValue = motorSelect ? motorSelect.value : '';
+    
+    // Jika ada data motor dari sidebar (php), gunakan itu
+    <?php if($motor): ?>
+        hargaPerHari = <?php echo e($motor->Harga); ?>;
+        document.getElementById('hargaPerHari').textContent = 'Rp ' + hargaPerHari.toLocaleString('id-ID');
+    <?php else: ?>
+        // Jika pilih dari dropdown
+        if (motorSelect && motorSelect.value && motorSelect.options) {
+            hargaPerHari = parseInt(motorSelect.options[motorSelect.selectedIndex].dataset.price) || 0;
+            if (hargaPerHari > 0) {
+                document.getElementById('hargaPerHari').textContent = 'Rp ' + hargaPerHari.toLocaleString('id-ID');
+            }
+        }
+    <?php endif; ?>
+    
+    // Jika tanggal belum diisi, jangan hitung jumlah hari
+    if (!tanggalSewa || !tanggalKembali) {
         return;
     }
     
-    const hargaPerHari = parseInt(motorSelect.options[motorSelect.selectedIndex].dataset.price) || 0;
+    // Jika harga masih 0, tidak bisa hitung
+    if (hargaPerHari === 0) {
+        return;
+    }
+    
     const startDate = new Date(tanggalSewa);
     const endDate = new Date(tanggalKembali);
+    
+    // Validasi tanggal
+    if (endDate < startDate) {
+        document.getElementById('jumlahHari').textContent = 'Invalid';
+        document.getElementById('totalBiaya').textContent = 'Invalid';
+        return;
+    }
     
     const timeDiff = endDate - startDate;
     const days = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
@@ -495,7 +526,6 @@ function calculatePrice() {
     
     const totalBiaya = hargaPerHari * days;
     
-    document.getElementById('hargaPerHari').textContent = 'Rp ' + hargaPerHari.toLocaleString('id-ID');
     document.getElementById('jumlahHari').textContent = days + ' hari';
     document.getElementById('totalBiaya').textContent = 'Rp ' + totalBiaya.toLocaleString('id-ID');
 }
@@ -563,10 +593,27 @@ function generateQRCode() {
 
 // Load initial price if motor is pre-selected
 document.addEventListener('DOMContentLoaded', function() {
-    <?php if($motor): ?>
-        document.getElementById('hargaPerHari').textContent = 'Rp <?php echo e(number_format($motor->Harga, 0, ',', '.')); ?>';
-    <?php endif; ?>
+    // Panggil perhitungan saat halaman load
     calculatePrice();
+    
+    // Tambahkan event listener untuk real-time calculation
+    const tanggalSewaInput = document.getElementById('Tanggal_sewa');
+    const tanggalKembaliInput = document.getElementById('Tanggal_kembali');
+    const motorSelect = document.getElementById('Id_motor');
+    
+    if (tanggalSewaInput) {
+        tanggalSewaInput.addEventListener('change', calculatePrice);
+        tanggalSewaInput.addEventListener('input', calculatePrice);
+    }
+    
+    if (tanggalKembaliInput) {
+        tanggalKembaliInput.addEventListener('change', calculatePrice);
+        tanggalKembaliInput.addEventListener('input', calculatePrice);
+    }
+    
+    if (motorSelect) {
+        motorSelect.addEventListener('change', calculatePrice);
+    }
 });
 
 // Form validation
