@@ -19,6 +19,7 @@ class DashboardController extends Controller
         $transaksi_aktif = Transaksi::where('Status_sewa', 'Aktif')->count();
         $total_pengembalian = 0;
         $total_admin = 0;
+        $last_admin_login = null;
         $chartLabels = ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'];
         
         try {
@@ -28,9 +29,20 @@ class DashboardController extends Controller
         }
         
         try {
-            $total_admin = User::count();
+            $total_admin = User::where('role', 'admin')->count();
         } catch (\Exception $e) {
             $total_admin = 0;
+        }
+        
+        try {
+            // Ambil admin terakhir yang login
+            $last_admin = User::where('role', 'admin')
+                ->whereNotNull('last_login_at')
+                ->orderBy('last_login_at', 'desc')
+                ->first();
+            $last_admin_login = $last_admin ? $last_admin->last_login_at : null;
+        } catch (\Exception $e) {
+            $last_admin_login = null;
         }
         
         return view('dashboard', compact(
@@ -41,6 +53,7 @@ class DashboardController extends Controller
             'transaksi_aktif',
             'total_pengembalian',
             'total_admin',
+            'last_admin_login',
             'chartLabels'
         ));
     }

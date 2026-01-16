@@ -32,6 +32,7 @@ class User extends Authenticatable
         'no_identitas',      // Nomor KTP/SIM/Paspor
         'tipe_identitas',    // Tipe: KTP, SIM, atau Paspor
         'role',              // Role: customer atau admin
+        'last_login_at',     // Waktu login terakhir
     ];
 
     /**
@@ -51,6 +52,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime', // Waktu email diverifikasi
+        'last_login_at' => 'datetime',     // Waktu login terakhir
     ];
 
     /**

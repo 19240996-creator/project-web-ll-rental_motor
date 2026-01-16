@@ -79,7 +79,7 @@
                 <h2><i class="fas fa-hand-wave" style="color:var(--brand-1);margin-right:8px"></i>Selamat Datang, {{ Auth::user()->name }}!</h2>
                 <p class="small-note">Kelola rental motor Anda dengan mudah dan efisien</p>
             </div>
-            <div class="small-note">Terakhir login: <strong>{{ Auth::user()->last_login_at ?? '—' }}</strong></div>
+            <div class="small-note">Terakhir Admin Login: <strong>{{ $last_admin_login ? $last_admin_login->format('d/m/Y H:i') : '—' }}</strong></div>
         </div>
 
         <div class="dashboard-header">
