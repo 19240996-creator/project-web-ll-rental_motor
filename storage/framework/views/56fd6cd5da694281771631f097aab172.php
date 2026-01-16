@@ -23,6 +23,7 @@
                     <th>ID Transaksi</th>
                     <th>User</th>
                     <th>Motor</th>
+                    <th>Admin</th>
                     <th>Tgl Sewa</th>
                     <th>Tgl Kembali</th>
                     <th>Biaya</th>
@@ -37,6 +38,7 @@
                         <td><strong><?php echo e($transaksi->Id_transaksi); ?></strong></td>
                         <td><?php echo e($transaksi->user->name ?? '-'); ?></td>
                         <td><?php echo e($transaksi->motor->Merk_motor ?? '-'); ?> - <?php echo e($transaksi->motor->Warna_motor ?? '-'); ?></td>
+                        <td><?php echo e($transaksi->admin->Nama_admin ?? '-'); ?></td>
                         <td><?php echo e($transaksi->Tanggal_sewa); ?></td>
                         <td><?php echo e($transaksi->Tanggal_kembali); ?></td>
                         <td>Rp <?php echo e(number_format($transaksi->Total_biaya, 0, ',', '.')); ?></td>
@@ -66,7 +68,7 @@
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <tr>
-                        <td colspan="9" class="text-center text-muted">Tidak ada data transaksi</td>
+                        <td colspan="10" class="text-center text-muted">Tidak ada data transaksi</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

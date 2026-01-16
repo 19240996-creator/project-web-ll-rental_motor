@@ -320,9 +320,19 @@
                     <h5 class="detail-card-title">
                         <i class="fas fa-user-tie"></i> Admin Penangani
                     </h5>
-                    <div class="detail-group">
-                        <div class="detail-label">Nama Admin</div>
-                        <div class="detail-value">{{ $transaksi->admin->Nama_admin ?? 'N/A' }}</div>
+                    <div class="detail-row">
+                        <div class="detail-group">
+                            <div class="detail-label">Nama Admin</div>
+                            <div class="detail-value">{{ $transaksi->admin->Nama_admin ?? 'N/A' }}</div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">No. Telepon</div>
+                            <div class="detail-value">{{ $transaksi->admin->No_telp ?? 'N/A' }}</div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">Alamat</div>
+                            <div class="detail-value">{{ $transaksi->admin->Alamat ?? 'N/A' }}</div>
+                        </div>
                     </div>
                 </div>
             @endif

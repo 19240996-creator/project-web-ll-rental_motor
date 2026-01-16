@@ -23,6 +23,7 @@
                     <th>ID Transaksi</th>
                     <th>User</th>
                     <th>Motor</th>
+                    <th>Admin</th>
                     <th>Tgl Sewa</th>
                     <th>Tgl Kembali</th>
                     <th>Biaya</th>
@@ -37,6 +38,7 @@
                         <td><strong>{{ $transaksi->Id_transaksi }}</strong></td>
                         <td>{{ $transaksi->user->name ?? '-' }}</td>
                         <td>{{ $transaksi->motor->Merk_motor ?? '-' }} - {{ $transaksi->motor->Warna_motor ?? '-' }}</td>
+                        <td>{{ $transaksi->admin->Nama_admin ?? '-' }}</td>
                         <td>{{ $transaksi->Tanggal_sewa }}</td>
                         <td>{{ $transaksi->Tanggal_kembali }}</td>
                         <td>Rp {{ number_format($transaksi->Total_biaya, 0, ',', '.') }}</td>
@@ -66,7 +68,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9" class="text-center text-muted">Tidak ada data transaksi</td>
+                        <td colspan="10" class="text-center text-muted">Tidak ada data transaksi</td>
                     </tr>
                 @endforelse
             </tbody>

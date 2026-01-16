@@ -40,7 +40,9 @@
                             <select class="form-select @error('Id_admin_rental_motor') is-invalid @enderror" id="Id_admin_rental_motor" name="Id_admin_rental_motor" required>
                                 <option selected disabled>-- Pilih Admin --</option>
                                 @foreach ($admins as $admin)
-                                    <option value="{{ $admin->Id_admin_rental_motor }}">{{ $admin->Nama_admin }}</option>
+                                    <option value="{{ $admin->Id_admin_rental_motor }}">
+                                        {{ $admin->Nama_admin }} - {{ $admin->No_telp ?? 'Tidak ada telepon' }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('Id_admin_rental_motor')

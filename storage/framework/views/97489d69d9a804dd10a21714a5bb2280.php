@@ -61,7 +61,10 @@ endif;
 unset($__errorArgs, $__bag); ?>" id="Id_admin_rental_motor" name="Id_admin_rental_motor" required>
                                 <option selected disabled>-- Pilih Admin --</option>
                                 <?php $__currentLoopData = $admins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $admin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($admin->Id_admin_rental_motor); ?>"><?php echo e($admin->Nama_admin); ?></option>
+                                    <option value="<?php echo e($admin->Id_admin_rental_motor); ?>">
+                                        <?php echo e($admin->Nama_admin); ?> - <?php echo e($admin->No_telp ?? 'Tidak ada telepon'); ?>
+
+                                    </option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                             <?php $__errorArgs = ['Id_admin_rental_motor'];
